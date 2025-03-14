@@ -1,0 +1,246 @@
+/* Dashboard */
+.dashboard-p {
+  width: 100%;
+  padding: 4px 10px;
+  background: #1171df;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.dashboard-p p {
+  font-weight: 600;
+  color: #fff;
+  font-size: 25px;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 19px;
+  width: 100%;
+}
+
+.cards-container .cards {
+  display: flex;
+  border: 1px solid #000;
+  border-radius: 7px;
+  padding: 7px;
+  max-width: 18.7%;
+  font-size: 14px;
+  font-weight: 500;
+  height: 120px;
+  width: 100%;
+  border: none;
+  background: #fff;
+  box-shadow: 5.5px 5.5px 3px 0px rgba(0,0,0,0.09);
+}
+
+.cards .card-content {
+  width: 50%;
+  font-size: 12px;
+}
+
+.card-content .card-data {
+  text-align: center;
+  font-size: 28px;
+  margin-top: 15px;
+}
+
+.cards-voter .card-content .card-data {
+  text-align: center;
+  font-size: 28px;
+  margin-top: 1px;
+}
+
+.cards .card-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 275px;
+  width: 50%;
+}
+
+.card-icon div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e4f1ffef;
+  padding: 10px;
+  height: 80px;
+  width: 80px;
+  border-radius: 40px ;
+}
+
+.card-icon div svg {
+  fill: #1171df;
+  font-size: 35px;
+}
+
+.second-row-chart {
+  width: 100%;
+  display: flex;
+  margin-bottom: 18px;
+  justify-content: space-between;
+}
+
+.second-row-chart p {
+  color: #1171df;
+  font-weight: 500;
+  font-size: 15px;
+  margin: 5px 0 0 18px;
+}
+
+.second-row-chart .growth-rate-chart{
+  width: 49%;
+  border-radius: 7px;
+  background: #fff;
+  box-shadow: 5.5px 5.5px 3px 0px rgba(0,0,0,0.09);
+}
+
+.second-row-chart .population-chart{
+  width: 49%;
+  border-radius: 7px;
+  background: #fff;
+  box-shadow: 5.5px 5.5px 3px 0px rgba(0,0,0,0.09);
+}
+
+.age-distribution-chart {
+  width: 100%;
+  border-radius: 7px;
+  background: #fff;
+  box-shadow: 5.5px 5.5px 3px 0px rgba(0,0,0,0.09);
+  margin-right: 20px;
+}
+
+/* Housholds */
+
+.households-container h1 {
+  color: #1171df;
+}
+
+.households-container .handle-households {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.households-container .household-search-container {
+  display: flex;
+}
+
+.handle-households .btn {
+  border: none;
+  padding: 5px 10px;
+  background: #1171df;
+  border-radius: 6px;
+  outline: none;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.households-table-container {
+  width: 100%;
+  background: #fff;
+  margin-top: 30px;
+}
+
+.households-table-container .households-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  table-layout: fixed;
+}
+
+.households-table tr:nth-child(even) {
+  background-color: #ebf3fa;
+}
+
+.households-table th {
+  background: #1171df;
+  color: #fff;
+  padding: 3px;
+  width: 100%;
+}
+
+.households-table td {
+  padding: 3px;
+}
+
+.households-table button{
+  cursor: pointer;
+  border: none;
+  padding: 2px;
+  border-radius: 2px;
+  margin-right: 7px;
+}
+
+.households-table button:last-child {
+  margin-right: 0;
+}
+
+.households-table button svg {
+  fill: #fff;
+  font-size: 17px;
+}
+
+.households-table .eyes {
+  background: #61f368;
+}
+
+.households-table .edit {
+  background: #2e8af3;
+}
+
+.households-table .delete {
+  background: #ec2647;
+}
+
+/* household-info-modal */
+
+.household-info-modal {
+  padding: 15px;
+}
+
+.household-info-modal h3 {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #949494;
+}
+
+.household-info-modal p {
+  padding: 7px 0;
+}
+
+.household-info-modal .household-name-container {
+  width: 100%;
+  border: 1px solid #7c7c7c;
+  padding: 3px 6px;
+  background: #83b7f1;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.household-info-modal .household-info-table-container {
+  width: 100%;
+}
+
+.household-info-modal .households-info-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  border: 1px solid #7c7c7c;
+  table-layout: fixed;
+}
+
+.households-info-table th {
+  background: #1171df;
+  color: #fff;
+  padding: 3px;
+}
+
+.households-info-table tr:nth-child(even) {
+  background-color: #ebf3fa;
+}
+
+

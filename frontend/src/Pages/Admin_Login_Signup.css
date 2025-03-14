@@ -1,0 +1,98 @@
+/* AdminLogin style */
+
+/* #1171df; */
+.login-container-1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #d7e8fc;
+  position: relative;
+}
+
+.login-container-2 {
+display: flex;
+align-items: center;
+justify-content: center;
+min-height: 100vh;
+background: #d7e8fc;
+}
+
+.login-container-1 .elena {
+background: url('../Images/iligan.png') no-repeat;
+background-size: contain;
+height: 120px;
+width: 120px;
+border-radius: 60px;
+position: absolute;
+top: 20px;
+left: 30px;
+animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+100%{-webkit-transform: rotate(360deg);}
+}
+
+.login-container {
+width: 400px;
+border-radius: 15px;
+background: #1171df;
+color: #fff;
+padding: 30px 40px;
+}
+
+.login-container h2 {
+text-align: center;
+font-weight: 700;
+}
+.login-container .input {
+width: 100%;
+height: 45px;
+margin: 30px 0;
+}
+
+.input input {
+width: 100%;
+height: 100%;
+border: none;
+outline: none;
+background: #fff;
+border-radius: 20px;
+color: #1171df;
+font-size: 15px;
+font-weight: 500;
+padding: 20px 45px 20px 20px;
+}
+
+input::placeholder {
+color: #fff;
+}
+
+.login-container .btn {
+width:100%;
+height: 39px;
+font-size: 19px;
+font-weight: 600;
+border: none;
+outline: none;
+border-radius: 35px;
+background: #fff;
+}
+
+.login-container .reg {
+text-align: center;
+margin-top: 20px;
+margin: 20px 0 15px;
+}
+
+.reg a {
+  color: white;
+  font-weight: 600;
+}
+
+.reg a:hover {
+  color: #bec40e;
+  transition: 1s ease;
+}
+
