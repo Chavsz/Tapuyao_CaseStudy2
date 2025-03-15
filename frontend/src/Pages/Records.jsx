@@ -4,7 +4,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../App.css';
 import Modal from "../modal"; 
+import * as ioIcons5 from "react-icons/io5";
 import * as ioIcons from "react-icons/io5";
+import * as mdIcons from "react-icons/md";
 
 const API_URL = 'http://localhost:5001/residents';
 const UPLOAD_URL = 'http://localhost:5001/upload-csv';
@@ -15,6 +17,8 @@ function Records() {
   const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState(''); 
+  const [selectedResident, setSelectedResident] = useState(null);
+  const [isResidentInfoOpen, setIsResidentInfoOpen] = useState(false);
   const [theme, setTheme] = useState("light")
 
   // Fetch all residents
@@ -110,6 +114,40 @@ function Records() {
       toast.error('Error uploading CSV file!');
       console.error('Error uploading CSV file:', error);
     }
+  };
+
+  const ResidentInfo = ({ resident, isOpen, onClose }) => {
+    if (!resident) return null;
+  
+    return (
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <div className='resident-info'>
+          <h2>Resident Information</h2>
+          <p><strong>ID:</strong> {resident.id}</p>
+          <p><strong>First Name:</strong> {resident.firstName}</p>
+          <p><strong>Last Name:</strong> {resident.lastName}</p>
+          <p><strong>Middle Name:</strong> {resident.middleName}</p>
+          <p><strong>Birth Date:</strong> {resident.birthDate}</p>
+          <p><strong>Age:</strong> {resident.age}</p>
+          <p><strong>Place of Birth:</strong> {resident.placeBirth}</p>
+          <p><strong>Address:</strong> {resident.address}</p>
+          <p><strong>Gender:</strong> {resident.gender}</p>
+          <p><strong>Voter Status:</strong> {resident.voterStatus}</p>
+          <p><strong>Civil Status:</strong> {resident.civilStatus}</p>
+          <p><strong>Email:</strong> {resident.email}</p>
+          <p><strong>Phone Number:</strong> {resident.phoneNumber}</p>
+          <p><strong>Father's Last Name:</strong> {resident.fatherLname}</p>
+          <p><strong>Father's First Name:</strong> {resident.fatherFname}</p>
+          <p><strong>Mother's Last Name:</strong> {resident.motherLname}</p>
+          <p><strong>Mother's First Name:</strong> {resident.motherFname}</p>
+        </div>
+      </Modal>
+    );
+  };
+
+  const handleSee = (resident) => {
+    setSelectedResident(resident);
+    setIsResidentInfoOpen(true);
   };
 
   return (
@@ -273,10 +311,18 @@ function Records() {
       </div>
       </Modal>
 
+      <ResidentInfo
+        resident={selectedResident}
+        isOpen={isResidentInfoOpen}
+        onClose={() => setIsResidentInfoOpen(false)}
+      />
+
+      <div className='res-header'>Residents Information</div>
+
       <div className='handle-residents'>
         <div className='search-container'>
           <div className='search-icon'>
-            <ioIcons.IoSearch/>
+            <ioIcons5.IoSearch/>
           </div>
           <input
             className='search'
@@ -287,14 +333,17 @@ function Records() {
           /> 
         </div>
         <button className="btn" onClick={() => setIsModalOpen(true)}>Add Resident</button>
-        <input type="file" accept=".csv" onChange={handleFileUpload} />
+        <div className='csv'>
+          <input className='uploadBtn' id='uploadBtn' type="file" accept=".csv" onChange={handleFileUpload} />
+          <label for="uploadBtn">Upload File</label>
+        </div>
       </div>
       
       <div className='table-wrapper'>
         <table className='table'>
           <thead>
             <tr>
-              <th></th>
+              <th>Actions</th>
               <th>ID</th>
               <th>First Name</th>
               <th>Last Name</th>
@@ -304,8 +353,6 @@ function Records() {
               <th>Place of Birth</th>
               <th>Address</th>
               <th>Gender</th>
-              <th>Voter Status</th>
-              <th>Civil Status</th>
               <th>Email</th>
               <th>Phone Number</th>
             </tr>
@@ -314,9 +361,12 @@ function Records() {
             {filteredResidents.length > 0 ? (
               filteredResidents.map((resident) => (
               <tr key={resident.id}>
-                <td>
-                  <button className='edit' onClick={() => handleEdit(resident)}>Edit</button>
-                  <button className='del' onClick={() => handleDelete(resident.id)}>Delete</button>
+                <td> 
+                  <div className='actions-btn'>
+                    <button className='check' onClick={() => handleSee(resident)}><ioIcons.IoEyeSharp /></button>
+                    <button className='edit' onClick={() => handleEdit(resident)}><mdIcons.MdEdit /></button>
+                    <button className='del' onClick={() => handleDelete(resident.id)}><mdIcons.MdDeleteOutline /></button>
+                  </div>
                 </td>
                 <td>{resident.id}</td>
                 <td>{resident.firstName}</td>
@@ -327,8 +377,6 @@ function Records() {
                 <td>{resident.placeBirth}</td>
                 <td>{resident.address}</td>
                 <td>{resident.gender}</td>
-                <td>{resident.voterStatus}</td>
-                <td>{resident.civilStatus}</td>
                 <td>{resident.email}</td>
                 <td>{resident.phoneNumber}</td>
               </tr>

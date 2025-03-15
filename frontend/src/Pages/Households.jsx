@@ -15,6 +15,7 @@ const Households = () => {
   const [houseName, setHouseName] = useState('');
   const [residents, setResidents] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpenAdd, setIsModalOpenAdd] = useState(false);
   const [selectedHousehold, setSelectedHousehold] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -45,7 +46,7 @@ const Households = () => {
     } catch (error) {
         toast.error('Error adding resident!');
     }
-    setIsModalOpen(false);
+    setIsModalOpenAdd(false);
   };
 
   // Delete a household
@@ -107,65 +108,74 @@ const Households = () => {
     return (
       <div className='households-container'>
         {householdInfoModal()}
-        <h1>Household Information</h1>
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <div className='.household-info-modal'>
+        <p>Household Information</p>
+        <Modal isOpen={isModalOpenAdd} onClose={() => setIsModalOpenAdd(false)}>
+          <div className='household-add-modal'>
             <input
+              className='input-household-name'
               type="text"
-              placeholder="House Name"
+              placeholder="Household Name"
               value={houseName}
               onChange={(e) => setHouseName(e.target.value)}
               required
             />
-            <button onClick={() => setResidents([...residents, { name: '', gender: '', age: '' }])}>
+            <button className='btn-add-resident' onClick={() => setResidents([...residents, { name: '', gender: '', age: '' }])}>
                 Add Resident
             </button>
-            {residents.map((resident, index) => (
-              <div key={index}>
-                <label>Name</label>
-                <input
-                  type="text"
-                  placeholder="Name"
-                  value={resident.name}
-                  onChange={(e) => {
-                    const newResidents = [...residents];
-                    newResidents[index].name = e.target.value;
-                    setResidents(newResidents);
-                  }}
-                  required
-                />
-                <label>Gender</label>
-                <input
-                  type="text"
-                  placeholder="Gender"
-                  value={resident.gender}
-                  onChange={(e) => {
-                      const newResidents = [...residents];
-                      newResidents[index].gender = e.target.value;
-                      setResidents(newResidents);
-                  }}
-                  required
-                />
-                <label>Age</label>
-                <input
-                  type="number"
-                  placeholder="Age"
-                  value={resident.age}
-                  onChange={(e) => {
-                      const newResidents = [...residents];
-                      newResidents[index].age = e.target.value;
-                      setResidents(newResidents);
-                  }}
-                  required
-                />
-              </div>
-            ))}
-            <button onClick={addHousehold}>Save Household</button>
+            <button className='btn-sv-hsh' onClick={addHousehold}>Save Household</button>
+            <div className='attr-hsh-outer'>
+              {residents.map((resident, index) => (
+                <div className='attr-hsh' key={index}>
+                  <div className='input-field-hsh'>
+                    <label>Name</label>
+                    <input
+                      type="text"
+                      placeholder="Name"
+                      value={resident.name}
+                      onChange={(e) => {
+                        const newResidents = [...residents];
+                        newResidents[index].name = e.target.value;
+                        setResidents(newResidents);
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='input-field-hsh'>
+                    <label>Gender</label>
+                    <input
+                      type="text"
+                      placeholder="Gender"
+                      value={resident.gender}
+                      onChange={(e) => {
+                          const newResidents = [...residents];
+                          newResidents[index].gender = e.target.value;
+                          setResidents(newResidents);
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='input-field-hsh'>
+                    <label>Age</label>
+                    <input
+                      type="number"
+                      placeholder="Age"
+                      value={resident.age}
+                      onChange={(e) => {
+                          const newResidents = [...residents];
+                          newResidents[index].age = e.target.value;
+                          setResidents(newResidents);
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </Modal>
 
         <div className='handle-households'>
-          <button className="btn" onClick={() => setIsModalOpen(true)}>Add Resident</button>
+          <button className="btn" onClick={() => setIsModalOpenAdd(true)}>Add Resident</button>
 
           <div className='household-search-container'>
             <input

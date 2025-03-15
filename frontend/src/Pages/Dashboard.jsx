@@ -122,7 +122,7 @@ const CustomTooltip = ({ active, payload }) => {
 
 const GrowthRateChart = () => {
   return (
-    <ResponsiveContainer width="100%" height={270}>
+    <ResponsiveContainer width="100%" height={240}>
       <LineChart data={growthRateData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" label={{ value: 'Censual Year', position: 'bottom' }} />
@@ -146,7 +146,7 @@ const GrowthRateChart = () => {
 
   const PopulationChart = () => {
     return (
-      <ResponsiveContainer width="100%" height={270}>
+      <ResponsiveContainer width="100%" height={240}>
         <LineChart data={populationData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" label={{ value: "Censual Year", position: "bottom" }}  />
@@ -160,7 +160,10 @@ const GrowthRateChart = () => {
 
   return (
     <div className='home'>
-      <div className='dashboard-p'> 
+      <div className='dashboard-header'> 
+        <p>Santa Elena Profiling System</p>
+      </div>
+      <div className='dashboard-p'>
         <p>Dashboard</p>
       </div>
       <div className='cards-container'>
@@ -221,6 +224,8 @@ const GrowthRateChart = () => {
         </div>
       </div>
 
+      <div className='his-text'>Historical Population</div>
+
       <div className='second-row-chart'>
         <div className='growth-rate-chart'>
           <p>Population (1990-2020)</p>
@@ -233,6 +238,7 @@ const GrowthRateChart = () => {
       </div>
 
       <div className='age-distribution-chart'>
+        <p>Age Distribution</p>
         {AgeDistributionChart()}
       </div>
       

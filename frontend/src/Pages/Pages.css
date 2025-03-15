@@ -1,16 +1,24 @@
 /* Dashboard */
-.dashboard-p {
+.dashboard-header {
   width: 100%;
-  padding: 4px 10px;
+  padding: 8px 10px;
   background: #1171df;
   border-radius: 8px;
   margin-bottom: 15px;
 }
 
-.dashboard-p p {
+.dashboard-header p {
   font-weight: 600;
   color: #fff;
-  font-size: 25px;
+  font-size: 22px;
+}
+
+.dashboard-p p {
+  color: #1171df;
+  padding: 0 0 0 6px;
+  font-weight: 600;
+  font-size: 21px;
+  margin-bottom: 8px;
 }
 
 .cards-container {
@@ -77,6 +85,13 @@
   font-size: 35px;
 }
 
+.his-text {
+  color: #1171df;
+  font-weight: 600;
+  font-size: 21px;
+  margin-bottom: 8px;
+}
+
 .second-row-chart {
   width: 100%;
   display: flex;
@@ -87,8 +102,8 @@
 .second-row-chart p {
   color: #1171df;
   font-weight: 500;
-  font-size: 15px;
-  margin: 5px 0 0 18px;
+  font-size: 17px;
+  margin: 5px 0 12px 18px;
 }
 
 .second-row-chart .growth-rate-chart{
@@ -103,6 +118,7 @@
   border-radius: 7px;
   background: #fff;
   box-shadow: 5.5px 5.5px 3px 0px rgba(0,0,0,0.09);
+  padding: 7px;
 }
 
 .age-distribution-chart {
@@ -113,10 +129,20 @@
   margin-right: 20px;
 }
 
+.age-distribution-chart p {
+  color: #1171df;
+  font-weight: 500;
+  font-size: 17px;
+  margin: 0 0 9px 18px;
+}
+
 /* Housholds */
 
-.households-container h1 {
+.households-container p {
   color: #1171df;
+  font-size: 24px;
+  font-weight: 560;
+
 }
 
 .households-container .handle-households {
@@ -127,6 +153,29 @@
 
 .households-container .household-search-container {
   display: flex;
+  position: relative;
+}
+
+.household-search-container .search-icon{
+  position: absolute;
+  top: 5px;
+  left: 6px;
+  font-size: 20px;
+}
+
+.household-search-container .search {
+  width: 300px;
+  height: 35px;
+  border-radius: 6px;
+  outline: none;
+  border: none;
+  padding: 0 28px ;
+  background: #fff;
+  border: .5px solid #aaaaaa;
+}
+
+.search-icon svg {
+  fill: #1171df;
 }
 
 .handle-households .btn {
@@ -139,6 +188,8 @@
   cursor: pointer;
   font-weight: 600;
 }
+
+
 
 .households-table-container {
   width: 100%;
@@ -243,4 +294,63 @@
   background-color: #ebf3fa;
 }
 
+/* Modal add household */
+.household-add-modal {
+  padding: 15px;
+  width: 100%;
+}
 
+.household-add-modal .input-household-name {
+  outline: none;
+  height: 28px;
+  width: 300px;
+  padding-left: 1%;
+  margin-right: 7px;
+}
+
+.household-add-modal .btn-add-resident {
+  background: #53f35b;
+  color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-right: 7px;
+}
+
+.household-add-modal .btn-sv-hsh {
+  background: #1171df;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.household-add-modal .attr-hsh-outer {
+  margin-top: 15px;
+  border-top: 2px solid #1171df;
+}
+
+.household-add-modal input::placeholder {
+  color: #494949;
+}
+
+.household-add-modal .attr-hsh {
+  padding: 10px 0 0 0;
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-field-hsh input {
+  outline: none;
+  height: 28px;
+  width: 200px;
+}
+
+.input-field-hsh label {
+  margin-right: 4px;
+}

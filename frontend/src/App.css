@@ -57,6 +57,13 @@
   background-color: #393939;
 }
 
+.res-header {
+  color:#1171df;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
 /* table-style */
 
 .table-wrapper {
@@ -79,20 +86,32 @@
   font-weight: 600;
 }
 
+.table th, td {
+  font-size: 13.5px;
+}
+
 .table tr:nth-child(even) {
   background-color: #ebf3fa;
 }
 
-.table th {
-  padding: 4px;
-}
-
-.table td {
-  padding: 4px;
-}
-
 .table th, th:first-child{
   width: 200px;
+}
+
+.table .actions-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table .check {
+  cursor: pointer;
+  border: 1px solid #11df11;
+  margin-right: 5.5px;
+  color: #11df11;
+  background: #acf1b8;
+  padding: 3px 6px;
+  border-radius: 3px;
 }
 
 .table .edit {
@@ -214,7 +233,7 @@ form .second-form .input-field:last-child {
 }
 
 .handle-residents .btn {
-  margin-left: 7px;
+  margin: 0 7px;
   height: 35px;
   background: #1171df;
   border: none;
@@ -222,9 +241,26 @@ form .second-form .input-field:last-child {
   cursor: pointer;
   padding: 8px;
   color: #ecf5ff;
-  border-radius: 9px;
+  border-radius: 5.5px;
   font-weight: 500;
   font-size: 14px;
+}
+
+.uploadBtn {
+  display: none;
+}
+
+.csv label {
+  display: inline-block;
+  height: 35px;
+  padding: 5px 13px;
+  color: #fff;
+  background: #1171df;
+  text-align: center;
+  user-select: none;
+  cursor: pointer;
+  border-radius: 5.5px;
+  font-weight: 500;
 }
 
 /* modal style */
