@@ -1,22 +1,25 @@
 import './App.css';
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import AdminLogin from './Pages/AdminLogin';
-import AdminSignup from './Pages/AdminSignUp';
 import Layout from "./Layout"; // Import the new Layout component
-
+import Logout from './Pages/Logout'; // Import the new Logout component
 
 function App() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      navigate('/admin-login'); // Redirect to admin login page if not logged in
+    }
+  }, [navigate]);
 
   return (
-      <Router>
-        <Routes>
-          <Route path="/admin-signup" Component={AdminSignup} />
-          <Route path="/admin-login" element={<AdminLogin />} />
-
-          <Route path="/*" element={<Layout />} />
-        </Routes>
-      </Router>
+    <Routes>
+      <Route path="/admin-login" element={<AdminLogin />} />
+      <Route path="/logout" element={<Logout />} />
+      <Route path="/*" element={<Layout />} />
+    </Routes>
   );
 }
 

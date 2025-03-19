@@ -26,8 +26,29 @@ const client = redis.createClient({
 });
 
 client.connect()
-  .then(() => console.log('Connected to Redis'))
+  .then(async() => {
+    console.log('Connected to Redis')
+    await createDefaultAdmin(); 
+  })
   .catch(err => console.error('Redis connection error:', err));
+
+// Default admin credentials
+const defaultAdmin = {
+  username: 'admin',
+  password: 'admin123'
+};
+
+// Create default admin if not exists
+async function createDefaultAdmin() {
+  const existingAdmin = await client.hGetAll(`admin:admin`);
+  if (!existingAdmin.password) {
+    const hashedPassword = await bcrypt.hash('admin123', 10);
+    await client.hSet(`admin:admin`, 'password', hashedPassword);
+    console.log('Default admin created with username: "admin" and password: "admin123"');
+  }
+}
+
+client.on('connect', createDefaultAdmin);
 
 // CRUD Operations
 
@@ -136,27 +157,19 @@ app.delete('/residents/:id', async (req, res) => {
   res.status(200).json({ message: 'resident deleted successfully' });
 });
 
-// Admin Signup
-app.post('/admin/signup', async (req, res) => {
-  const { username, password } = req.body;
-
-  if (!username || !password) {
-    return res.status(400).json({ message: 'Username and password are required' });
-  }
-
+// Delete all residents
+app.delete('/residents', async (req, res) => {
   try {
-    const existingUser = await client.hGetAll(`admin:${username}`);
-    if (Object.keys(existingUser).length > 0) {
-      return res.status(400).json({ message: 'Username already exists' });
+    const keys = await client.keys('resident:*');
+    if (keys.length === 0) {
+      return res.status(404).json({ message: 'No residents found to delete' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await client.hSet(`admin:${username}`, 'password', hashedPassword);
-
-    res.status(201).json({ message: 'Admin registered successfully' });
+    await Promise.all(keys.map(key => client.del(key)));
+    res.status(200).json({ message: 'All residents deleted successfully' });
   } catch (error) {
-    console.error('Error registering admin:', error);
-    res.status(500).json({ message: 'Failed to register admin' });
+    console.error('Error deleting all residents:', error);
+    res.status(500).json({ message: 'Failed to delete all residents' });
   }
 });
 
@@ -291,7 +304,7 @@ fs.createReadStream(filePath)
       await client.hSet(residentKey, 'motherFname', motherFname);
     }
   })
-
+  
   .on('end', async () => {
     fs.unlinkSync(req.file.path);
     res.status(201).json({ message: 'CSV uploaded successfully' });
@@ -301,6 +314,88 @@ fs.createReadStream(filePath)
     res.status(500).json({ message: 'Error processing CSV file' });
   });
 });
+
+  // businesses
+ // Create a new business
+app.post('/businesses', async (req, res) => {
+  const { id, businessName, ownerName, businessAddress, dateRegistered, expiracyDate, businessStatus, contactNumber } = req.body;
+
+  if (!id || !businessName || !ownerName || !businessAddress || !dateRegistered || !expiracyDate || !businessStatus || !contactNumber) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  try {
+
+    const businessData = { businessName, ownerName, businessAddress, dateRegistered, expiracyDate, businessStatus, contactNumber};
+
+    await client.hSet(`business:${id}`, 'businessName', businessData.businessName);
+    await client.hSet(`business:${id}`, 'ownerName', businessData.ownerName);
+    await client.hSet(`business:${id}`, 'businessAddress', businessData.businessAddress);
+    await client.hSet(`business:${id}`, 'dateRegistered', businessData.dateRegistered);
+    await client.hSet(`business:${id}`, 'expiracyDate', businessData.expiracyDate);
+    await client.hSet(`business:${id}`, 'businessStatus', businessData.businessStatus);
+    await client.hSet(`business:${id}`, 'contactNumber', businessData.contactNumber);
+
+    res.status(201).json({ message: 'Business added successfully' });
+  } catch (error) {
+    console.error('Error adding business:', error);
+    res.status(500).json({ message: 'Failed to add business' });
+  }
+});
+
+// Read (R)
+app.get('/businesses/:id', async (req, res) => {
+  const id = req.params.id;
+  const business = await client.hGetAll(`business:${id}`);
+  if (Object.keys(business).length === 0) {
+    return res.status(404).json({ message: 'business not found' });
+  }
+  res.json(business);
+});
+
+// Read all businesses
+app.get('/businesses', async (req, res) => {
+  try {
+    const keys = await client.keys('business:*');
+    const businesses = await Promise.all(
+      keys.map(async (key) => ({ id: key.split(':')[1], ...(await client.hGetAll(key)) }))
+    );
+    res.json(businesses);
+  } catch (error) {
+    console.error('Error fetching businesses:', error);
+    res.status(500).json({ message: 'Failed to fetch businesses' });
+  }
+});
+
+// Update a business
+app.put('/businesses/:id', async (req, res) => {
+  const { id } = req.params;
+  const updates = req.body;
+
+  try {
+    const exists = await client.exists(`business:${id}`);
+    if (!exists) return res.status(404).json({ message: 'Business not found' });
+
+    await client.hSet(`business:${id}`, updates);
+    res.json({ message: 'Business updated successfully' });
+  } catch (error) {
+    console.error('Error updating business:', error);
+    res.status(500).json({ message: 'Failed to update business' });
+  }
+});
+
+// Delete a business
+app.delete('/businesses/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await client.del(`business:${id}`);
+    res.json({ message: 'Business deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting business:', error);
+    res.status(500).json({ message: 'Failed to delete business' });
+  }
+});
+
 
 // Start server
 app.listen(PORT, () => {

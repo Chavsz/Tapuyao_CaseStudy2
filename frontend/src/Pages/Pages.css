@@ -189,7 +189,22 @@
   font-weight: 600;
 }
 
+.btn-del-all {
+  margin-left: 7px;
+  padding: 0 4px;
+  outline: none;
+  background: #e82727;
+  border-radius: 3px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.btn-del-all svg {
+  font-size: 18.5px;
+  fill: #ffffff;
+}
 
 .households-table-container {
   width: 100%;
@@ -353,4 +368,79 @@
 
 .input-field-hsh label {
   margin-right: 4px;
+}
+
+/* business container */
+
+.business-container .business-header {
+  width: 100%;
+  padding: 6px 0;
+}
+
+.business-header p {
+  font-weight: 600;
+  font-size: 24px;
+  color: #1171df;
+}
+
+.business-table {
+  text-align: center;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.business-container .bsns-form {
+  margin-bottom: 10px;
+}
+
+.business-table thead {
+  background: #1171df;
+  color: #fff;
+}
+
+.business-table tbody {
+  background: #fff;
+}
+
+.business-table tbody td {
+  font-size: 13.5px;
+}
+
+.business-edit {
+  margin-right: 7px;
+  border: 1px solid #1171df;
+  background: #b3d7f5;
+  padding: 3px 6px;
+  border-radius: 3px;
+}
+
+.business-edit svg {
+  fill: #1171df;
+}
+
+.business-del {
+  border: 1px solid #ec1a1a;
+  background: #f8c0c0;
+  padding: 3px 6px;
+  border-radius: 3px;
+}
+
+.business-del svg {
+  fill: #ec1a1a;
+}
+
+/* Paging */
+.paging-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: #fff;
+  padding: 5px 0;
+}
+
+.paging-row .pagin {
+  margin: 0;
+  padding: 0 10px;
 }

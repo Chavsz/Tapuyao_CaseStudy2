@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { SideBarData } from './SidebarData';
 import './Navbar.css';
 import { IconContext } from 'react-icons/lib';
@@ -25,6 +25,12 @@ function Navbar() {
               </li>
             )
           })}
+          <li className='nav-text'>
+            <Link to='/logout'>
+              <riIcons.RiLogoutBoxRLine />
+              <span>Logout</span>
+            </Link>
+          </li>
         </ul>
       </nav>
       </IconContext.Provider>

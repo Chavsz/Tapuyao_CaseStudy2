@@ -19,8 +19,9 @@ function Records() {
   const [searchTerm, setSearchTerm] = useState(''); 
   const [selectedResident, setSelectedResident] = useState(null);
   const [isResidentInfoOpen, setIsResidentInfoOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 10;
   const [theme, setTheme] = useState("light")
-
   // Fetch all residents
   const fetchResidents = async () => {
     try {
@@ -80,6 +81,18 @@ function Records() {
     }
   };
 
+  // Delete all residents
+  const handleDeleteAll = async () => {
+    try {
+      await axios.delete(API_URL);
+      toast.success('All residents deleted successfully!');
+      fetchResidents();
+    } catch (error) {
+      toast.error('Error deleting all residents!');
+      console.error('Error deleting all residents:', error);
+    }
+  };
+
   // Populate form for updating resident
   const handleEdit = (resident) => {
     setFormData(resident);
@@ -116,6 +129,16 @@ function Records() {
     }
   };
 
+  const indexOfLastStudent = currentPage * rowsPerPage;
+  const indexOfFirstStudent = indexOfLastStudent - rowsPerPage;
+  const currentResidents = filteredResidents.slice(indexOfFirstStudent, indexOfLastStudent);
+  const totalPages = Math.ceil(filteredResidents.length / rowsPerPage);
+
+  const handleSee = (resident) => {
+    setSelectedResident(resident);
+    setIsResidentInfoOpen(true);
+  };
+
   const ResidentInfo = ({ resident, isOpen, onClose }) => {
     if (!resident) return null;
   
@@ -143,11 +166,6 @@ function Records() {
         </div>
       </Modal>
     );
-  };
-
-  const handleSee = (resident) => {
-    setSelectedResident(resident);
-    setIsResidentInfoOpen(true);
   };
 
   return (
@@ -335,8 +353,9 @@ function Records() {
         <button className="btn" onClick={() => setIsModalOpen(true)}>Add Resident</button>
         <div className='csv'>
           <input className='uploadBtn' id='uploadBtn' type="file" accept=".csv" onChange={handleFileUpload} />
-          <label for="uploadBtn">Upload File</label>
+          <label htmlFor="uploadBtn">Upload File</label>
         </div>
+        <button className="btn-del-all" onClick={handleDeleteAll}><mdIcons.MdDeleteOutline /></button>
       </div>
       
       <div className='table-wrapper'>
@@ -358,8 +377,8 @@ function Records() {
             </tr>
           </thead>
           <tbody>
-            {filteredResidents.length > 0 ? (
-              filteredResidents.map((resident) => (
+            {currentResidents.length > 0 ? (
+              currentResidents.map((resident) => (
               <tr key={resident.id}>
                 <td> 
                   <div className='actions-btn'>
@@ -386,8 +405,25 @@ function Records() {
               <td colSpan="9">No students found</td>
             </tr>
           )}
+
           </tbody>
         </table>
+
+        <div className='paging-container'>
+          <div className='paging-row'>
+            <button 
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
+              disabled={currentPage === 1}>
+              &lt;
+            </button>
+            <span className='pagin'> {currentPage} of {totalPages} </span>
+            <button 
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
+              disabled={currentPage === totalPages}>
+              &gt;
+            </button>
+          </div>
+        </div>
       </div> 
       <ToastContainer />
     </div>

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
 import './Admin_Login_Signup.css';
 
 const API_URL = 'http://localhost:5001/admin/signin';
@@ -12,17 +11,22 @@ function AdminLogin() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setUsername('');
+    setPassword('');
+  }, []);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
 
     try {
-      const response = await axios.post(API_URL, { username, password }); 
+      const response = await axios.post(API_URL, { username, password });
       localStorage.setItem('token', response.data.token);
-      navigate('/dashboard'); 
+      navigate('/'); // Redirect to the dashboard
     } catch (err) {
-      setError('Invalid credentials, please try again.');
-    }
+      setError(err.response?.data?.message || 'Login failed, please try again.');
+    }    
   };
 
   return (
@@ -52,11 +56,7 @@ function AdminLogin() {
             />
           </div>
 
-          <button type="submit" className='btn'>Sign In</button>
-
-          <div className='reg'> 
-            <p><Link to='/admin-signup'>Sign Up</Link></p>
-          </div>
+          <button type="submit" className='btn'>Enter</button>
         </form>
       </div>
     </div>

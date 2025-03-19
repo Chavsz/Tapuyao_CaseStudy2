@@ -4,6 +4,7 @@ import axios from 'axios';
 import * as goIcons from "react-icons/go";
 import * as ioIcons from "react-icons/io";
 import * as mdIcons from "react-icons/md";
+import * as faIcons from "react-icons/fa";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 
 const API_URL = {
@@ -218,7 +219,7 @@ const GrowthRateChart = () => {
           </div>
           <div className='card-icon'>
             <div>
-              <mdIcons.MdHowToVote />
+              <faIcons.FaHouseUser  />
             </div>
           </div>
         </div>
