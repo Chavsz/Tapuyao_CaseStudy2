@@ -21,12 +21,16 @@ function AdminLogin() {
     setError('');
 
     try {
-      const response = await axios.post(API_URL, { username, password });
+      const response = await axios.post(API_URL, { username, password }); 
       localStorage.setItem('token', response.data.token);
-      navigate('/'); // Redirect to the dashboard
+
+      setUsername('');
+      setPassword('');
+      
+      navigate('/'); // Navigate to the dashboard after successful login
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed, please try again.');
-    }    
+      setError('Invalid credentials, please try again.');
+    }
   };
 
   return (

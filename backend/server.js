@@ -26,10 +26,7 @@ const client = redis.createClient({
 });
 
 client.connect()
-  .then(async() => {
-    console.log('Connected to Redis')
-    await createDefaultAdmin(); 
-  })
+  .then(() => console.log('Connected to Redis'))
   .catch(err => console.error('Redis connection error:', err));
 
 // Default admin credentials
@@ -40,11 +37,11 @@ const defaultAdmin = {
 
 // Create default admin if not exists
 async function createDefaultAdmin() {
-  const existingAdmin = await client.hGetAll(`admin:admin`);
-  if (!existingAdmin.password) {
-    const hashedPassword = await bcrypt.hash('admin123', 10);
-    await client.hSet(`admin:admin`, 'password', hashedPassword);
-    console.log('Default admin created with username: "admin" and password: "admin123"');
+  const existingAdmin = await client.hGetAll(`admin:${defaultAdmin.username}`);
+  if (Object.keys(existingAdmin).length === 0) {
+    const hashedPassword = await bcrypt.hash(defaultAdmin.password, 10);
+    await client.hSet(`admin:${defaultAdmin.username}`, 'password', hashedPassword);
+    console.log('Default admin created');
   }
 }
 
@@ -369,15 +366,28 @@ app.get('/businesses', async (req, res) => {
 
 // Update a business
 app.put('/businesses/:id', async (req, res) => {
-  const { id } = req.params;
-  const updates = req.body;
+  const id = req.params.id;
+  const { businessName, ownerName, businessAddress, dateRegistered, expiracyDate, businessStatus, contactNumber } = req.body;
+
+  if ( !businessName && !ownerName && !businessAddress && !dateRegistered && !expiracyDate && !businessStatus && !contactNumber) {
+    return res.status(400).json({ message: 'All fields are required to update' });
+  }
 
   try {
-    const exists = await client.exists(`business:${id}`);
-    if (!exists) return res.status(404).json({ message: 'Business not found' });
+    const exists = await client.hGetAll(`business:${id}`);
+    if (Object.keys(exists).length === 0) {
+      return res.status(404).json({ message: 'business not found' });
+    }
 
-    await client.hSet(`business:${id}`, updates);
-    res.json({ message: 'Business updated successfully' });
+    if (businessName) await client.hSet(`business:${id}`,'businessName',businessName )
+    if ( ownerName) await client.hSet(`business:${id}`,' ownerName',  ownerName)
+    if (businessAddress) await client.hSet(`business:${id}`,'businessAddress',businessAddress )
+    if (dateRegistered) await client.hSet(`business:${id}`,'dateRegistered',dateRegistered )
+    if (expiracyDate) await client.hSet(`business:${id}`,'expiracyDate',expiracyDate)
+    if (businessStatus) await client.hSet(`business:${id}`,'businessStatus',businessStatus)
+    if (contactNumber) await client.hSet(`business:${id}`,' contactNumber', contactNumber )
+
+    res.status(200).json( {message: 'business updates successfully'} )
   } catch (error) {
     console.error('Error updating business:', error);
     res.status(500).json({ message: 'Failed to update business' });
