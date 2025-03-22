@@ -112,7 +112,7 @@ function Business() {
             </div>
 
             <div className='input-bsns'>
-              <label>Expiry</label>
+              <label>Expiry Date</label>
               <input type="date" name="expiracyDate" value={form.expiracyDate} onChange={handleChange} required />
             </div>
           </div>
@@ -120,7 +120,11 @@ function Business() {
           <div className='bsns-form-1'>
             <div className='input-bsns'>
               <label>Status</label>
-              <input type="text" name="businessStatus" value={form.businessStatus} onChange={handleChange} required />
+              <select name='businessStatus' value={form.businessStatus} onChange={handleChange} required>
+                <option value="">Select Status</option>
+                <option value="Registered">Registered</option>
+                <option value="Not Registered">Not Registered</option>
+              </select>
             </div>
 
             <div className='input-bsns'>

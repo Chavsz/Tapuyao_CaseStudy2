@@ -315,6 +315,14 @@
   width: 100%;
 }
 
+.household-add-modal .input-household-id {
+  outline: none;
+  height: 28px;
+  width: 125px;
+  padding-left: 1%;
+  margin-right: 7px;
+}
+
 .household-add-modal .input-household-name {
   outline: none;
   height: 28px;
@@ -420,6 +428,15 @@
 }
 
 .input-bsns input {
+  width: 300px;
+  height: 30px;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  font-size: 12.2px;
+}
+
+.input-bsns select {
   width: 300px;
   height: 30px;
   outline: none;

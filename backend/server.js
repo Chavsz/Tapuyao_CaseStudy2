@@ -217,23 +217,26 @@ app.get('/admin/protected', authenticateAdmin, (req, res) => {
 // Store household data
 app.post('/households', async (req, res) => {
   try {
-      const { houseName, residents } = req.body;
-      const householdKey = `household:${houseName}`;
-      await client.set(householdKey, JSON.stringify(residents));
+      const { id, houseName, residents } = req.body;
+      if (!id) {
+          return res.status(400).json({ error: "ID is required" });
+      }
+      const householdKey = `household:${id}`;
+      await client.set(householdKey, JSON.stringify({ houseName, residents }));
       res.status(200).json({ message: 'Household stored successfully' });
   } catch (error) {
       res.status(500).json({ error: error.message });
   }
 });
 
-// Retrieve household data
-app.get('/households/:houseName', async (req, res) => {
+// Retrieve household data by ID
+app.get('/households/:id', async (req, res) => {
   try {
-      const { houseName } = req.params;
-      const householdKey = `household:${houseName}`;
+      const { id } = req.params;
+      const householdKey = `household:${id}`;
       const data = await client.get(householdKey);
       if (data) {
-          res.status(200).json({ houseName, residents: JSON.parse(data) });
+          res.status(200).json({ id, ...JSON.parse(data) });
       } else {
           res.status(404).json({ message: 'Household not found' });
       }
@@ -249,7 +252,7 @@ app.get('/households', async (req, res) => {
       const households = await Promise.all(
           keys.map(async (key) => {
               const data = await client.get(key);
-              return { houseName: key.replace('household:', ''), residents: JSON.parse(data) };
+              return { id: key.replace('household:', ''), ...JSON.parse(data) };
           })
       );
       res.status(200).json(households);
@@ -258,11 +261,11 @@ app.get('/households', async (req, res) => {
   }
 });
 
-// Delete a household
-app.delete('/households/:houseName', async (req, res) => {
+// Delete a household by ID
+app.delete('/households/:id', async (req, res) => {
   try {
-      const { houseName } = req.params;
-      const householdKey = `household:${houseName}`;
+      const { id } = req.params;
+      const householdKey = `household:${id}`;
       await client.del(householdKey);
       res.status(200).json({ message: 'Household deleted successfully' });
   } catch (error) {

@@ -12,6 +12,7 @@ const API_URL = 'http://localhost:5001/households';
 
 const Households = () => {
   const [households, setHouseholds] = useState([]);
+  const [id, setId] = useState('');
   const [houseName, setHouseName] = useState('');
   const [residents, setResidents] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,33 +33,35 @@ const Households = () => {
     fetchHouseholds();
   }, []);
 
-  // Add a household
-  const addHousehold = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(API_URL, {
-        houseName,
-        residents
-      });
-      fetchHouseholds();
-      setHouseName('');
-      setResidents([]);
-    } catch (error) {
-        toast.error('Error adding resident!');
-    }
-    setIsModalOpenAdd(false);
-  };
+// Add a household
+const addHousehold = async (e) => {
+  e.preventDefault();
+  try {
+    await axios.post(API_URL, {
+      id,
+      houseName,
+      residents
+    });
+    fetchHouseholds();
+    setId('');
+    setHouseName('');
+    setResidents([]);
+  } catch (error) {
+      toast.error('Error adding household!');
+  }
+  setIsModalOpenAdd(false);
+};
 
-  // Delete a household
-  const deleteHousehold = async (name) => {
-      try {
-        await axios.delete(`${API_URL}/${name}`);
-        toast.success('household deleted!');
-        fetchHouseholds();
-      } catch (error) {
-        toast.error('Error deleting resident!');
-      }
-  };
+// Delete a household
+const deleteHousehold = async (id) => {
+    try {
+      await axios.delete(`${API_URL}/${id}`);
+      toast.success('Household deleted!');
+      fetchHouseholds();
+    } catch (error) {
+      toast.error('Error deleting household!');
+    }
+};
 
   // Handle search
   const handleSearchChange = (e) => {
@@ -67,7 +70,7 @@ const Households = () => {
 
   //filter students
   const filteredHouseholds = households.filter(household =>
-    household.houseName.toLowerCase().includes(searchTerm.toLowerCase()) 
+    household.id.toLowerCase().includes(searchTerm.toLowerCase()) 
   );
 
     // households information modal 
@@ -112,6 +115,14 @@ const Households = () => {
         <Modal isOpen={isModalOpenAdd} onClose={() => setIsModalOpenAdd(false)}>
           <div className='household-add-modal'>
             <input
+              className='input-household-id'
+              type="text"
+              placeholder="Household ID"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+              required
+            />
+            <input
               className='input-household-name'
               type="text"
               placeholder="Household Name"
@@ -120,7 +131,7 @@ const Households = () => {
               required
             />
             <button className='btn-add-resident' onClick={() => setResidents([...residents, { name: '', gender: '', age: '' }])}>
-                Add Resident
+              Add Resident
             </button>
             <button className='btn-sv-hsh' onClick={addHousehold}>Save Household</button>
             <div className='attr-hsh-outer'>
@@ -203,11 +214,11 @@ const Households = () => {
             <tbody>
               {filteredHouseholds.length > 0 ? (
                 filteredHouseholds.map((households) => (
-                <tr>
+                <tr key={households.id}>
                   <td>
                     <button onClick={() => { setSelectedHousehold(households); setIsModalOpen(true); }} className='eyes'><ioIcons.IoEyeSharp /></button>
                     <button className='edit'><mdIcons.MdEdit /></button>
-                    <button onClick={() => deleteHousehold(households.houseName)} className='delete'><mdIcons.MdDeleteOutline /></button>
+                    <button onClick={() => deleteHousehold(households.id)} className='delete'><mdIcons.MdDeleteOutline /></button>
                   </td>
                   <td>{households.houseName}</td>
                   <td>{households.residents ? households.residents.length : 0}</td>
