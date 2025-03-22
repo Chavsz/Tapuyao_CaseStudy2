@@ -391,8 +391,68 @@
 }
 
 .business-container .bsns-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #1171df;
+  padding: 20px 0;
+  margin: 0 70px 30px 70px;
+  border-radius: 7px;
+}
+
+.bsns-form input {
+  padding-left: 4px;
+}
+
+.bsns-form input::placeholder {
+  color: #A9A9A9; 
+  font-size: 12.2px;
+}
+
+.bsns-form .bsns-form-1 {
+  display: flex;
+  gap: 6.5em;
   margin-bottom: 10px;
 }
+
+.bsns-form-1 .input-bsns {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-bsns label {
+  font-size: 15px;
+}
+
+.input-bsns input {
+  width: 300px;
+  height: 30px;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  font-size: 12.2px;
+}
+
+.bsns-form-btn {
+  background: #fff;
+  color: #1171df;
+  font-weight: 600;
+  padding: 5px 10px;
+  border: 1px solid #1171df;
+  outline: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: .65s;
+}
+
+.bsns-form-btn:hover {
+  transition: .65s;
+  background: #1171df;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+/* Business Table */
 
 .business-table thead {
   background: #1171df;
