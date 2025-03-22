@@ -404,11 +404,6 @@
   padding-left: 4px;
 }
 
-.bsns-form input::placeholder {
-  color: #A9A9A9; 
-  font-size: 12.2px;
-}
-
 .bsns-form .bsns-form-1 {
   display: flex;
   gap: 6.5em;

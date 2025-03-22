@@ -72,22 +72,21 @@
 }
 
 .table-wrapper .table {
-  table-layout: auto;
   border-collapse: collapse;
   border: none;
   text-align: center;
   background: white;
-  table-layout: fixed;
 }
 
-.table thead {
-  background: #1171df;
-  color: #fff;
-  font-weight: 600;
+.table-wrapper .table thead {
+  color: #000000;
+  border-bottom:2px solid #868686;
 }
 
-.table th, td {
+.table-wrapper .table th, td {
   font-size: 13.5px;
+  padding: 2.5px 0;
+  color: #868686;
 }
 
 .table tr:nth-child(even) {
