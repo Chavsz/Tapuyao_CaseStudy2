@@ -63,12 +63,24 @@ const deleteHousehold = async (id) => {
     }
 };
 
+  // Delete all households
+  const handleDeleteAll = async () => {
+    try {
+      await axios.delete(API_URL);
+      toast.success('All households deleted successfully!');
+      fetchHouseholds();
+    } catch (error) {
+      toast.error('Error deleting all households!');
+      console.error('Error deleting all households', error);
+    }
+  };
+
   // Handle search
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  //filter students
+  //filter households
   const filteredHouseholds = households.filter(household =>
     household.id.toLowerCase().includes(searchTerm.toLowerCase()) 
   );
@@ -186,7 +198,11 @@ const deleteHousehold = async (id) => {
         </Modal>
 
         <div className='handle-households'>
-          <button className="btn" onClick={() => setIsModalOpenAdd(true)}>Add Resident</button>
+          <div>
+            <button className="btn" onClick={() => setIsModalOpenAdd(true)}>Add Resident</button>
+
+            <button className="hh-btn-del-all" onClick={handleDeleteAll}><mdIcons.MdDeleteOutline /></button>
+          </div>
 
           <div className='household-search-container'>
             <input

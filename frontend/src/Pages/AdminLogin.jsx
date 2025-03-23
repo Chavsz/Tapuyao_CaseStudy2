@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Admin_Login_Signup.css';
 
-const API_URL = 'http://localhost:5001/admin/signin';
+const API_URL = 'http://localhost:5001/login';
 
 function AdminLogin() {
   const [username, setUsername] = useState(''); 

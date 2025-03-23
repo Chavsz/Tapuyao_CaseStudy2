@@ -123,7 +123,7 @@ const CustomTooltip = ({ active, payload }) => {
 
 const GrowthRateChart = () => {
   return (
-    <ResponsiveContainer width="100%" height={240}>
+    <ResponsiveContainer width="100%" height={225}>
       <LineChart data={growthRateData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" label={{ value: 'Censual Year', position: 'bottom' }} />
@@ -147,7 +147,7 @@ const GrowthRateChart = () => {
 
   const PopulationChart = () => {
     return (
-      <ResponsiveContainer width="100%" height={240}>
+      <ResponsiveContainer width="100%" height={225}>
         <LineChart data={populationData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" label={{ value: "Censual Year", position: "bottom" }}  />
@@ -174,7 +174,7 @@ const GrowthRateChart = () => {
             <p className='card-data'>{residents.length}</p>
           </div>
           <div className='card-icon'>
-            <div>
+            <div className='card-icon-resident'>
               <goIcons.GoPerson />
             </div>
           </div>
@@ -185,7 +185,7 @@ const GrowthRateChart = () => {
             <p className='card-data'>{genderCounts['Male'] || 0}</p>
           </div>
           <div className='card-icon'>
-            <div>
+            <div className='card-icon-male'>
               <ioIcons.IoMdMale />
             </div>
           </div>
@@ -196,7 +196,7 @@ const GrowthRateChart = () => {
             <p className='card-data'>{genderCounts['Female'] || 0}</p>
           </div>
           <div className='card-icon'>
-            <div>
+            <div className='card-icon-female'>
               <ioIcons.IoMdFemale/>
             </div>
           </div>
@@ -207,7 +207,7 @@ const GrowthRateChart = () => {
             <p className='card-data'>{voterCounts['Registered'] || 0}</p>
           </div>
           <div className='card-icon'>
-            <div>
+            <div className='card-icon-vote'>
               <mdIcons.MdHowToVote />
             </div>
           </div>
@@ -218,7 +218,7 @@ const GrowthRateChart = () => {
             <p className='card-data'>{households.length}</p>
           </div>
           <div className='card-icon'>
-            <div>
+            <div className='card-icon-household'>
               <faIcons.FaHouseUser  />
             </div>
           </div>

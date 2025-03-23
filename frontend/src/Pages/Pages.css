@@ -80,8 +80,28 @@
   border-radius: 40px ;
 }
 
-.card-icon div svg {
-  fill: #1171df;
+.card-icon .card-icon-resident {
+  color: #44e424;
+  font-size: 35px;
+}
+
+.card-icon .card-icon-male {
+  color: #09fdf1;
+  font-size: 35px;
+}
+
+.card-icon .card-icon-female {
+  color: #f132f7;
+  font-size: 35px;
+}
+
+.card-icon .card-icon-vote {
+  color: #faeb15;
+  font-size: 35px;
+}
+
+.card-icon .card-icon-household {
+  color: #1171df;
   font-size: 35px;
 }
 
@@ -182,6 +202,19 @@
   border: none;
   padding: 5px 10px;
   background: #1171df;
+  border-radius: 6px;
+  outline: none;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  margin-right: 5px;
+}
+
+
+.handle-households .hh-btn-del-all {
+  border: none;
+  background: #e82727;
+  padding: 5px 10px;
   border-radius: 6px;
   outline: none;
   color: #fff;
@@ -391,6 +424,50 @@
   color: #1171df;
 }
 
+.handle-bsns {
+  width: 100%;
+  display: flex;
+  gap:.5em;
+  margin-bottom: 15px;
+}
+
+.bsns-search-container {
+  position: relative;
+}
+
+
+.bsns-search-container .search {
+  width: 300px;
+  height: 30px;
+  padding-left: 8%;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+}
+
+.bsns-search-container .bsns-search-icon {
+  position: absolute;
+  top: 4px;
+  left: 3.5px;
+  color: #1171df;
+  font-size: 18px;
+}
+
+.bsns-btn-del-all {
+  background: #e82727;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #fff;
+  padding: 3px 5px;
+  border-radius: 2px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* business table */
+
 .business-table {
   text-align: center;
   width: 100%;
@@ -462,6 +539,24 @@
   background: #1171df;
   border: 1px solid #fff;
   color: #fff;
+}
+
+.bsns-reg {
+  padding: 4px 8.4px;
+  border: 1px solid #0cd8fc;
+  border-radius: 12px;
+  color:  #0cd8fc;
+  font-weight: 600;
+  background: #dbfaff;
+}
+
+.bsns-not-reg {
+  padding: 4px 8.4px;
+  border: 1px solid #f82c48;
+  border-radius: 12px;
+  color:  #f82c48;
+  font-weight: 600;
+  background:#f5c7cd ;
 }
 
 /* Business Table */

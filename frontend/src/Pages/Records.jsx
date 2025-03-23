@@ -139,6 +139,14 @@ function Records() {
     setIsResidentInfoOpen(true);
   };
 
+  const borderStatus = (status) => {
+    if (status === 'Registered') {
+      return 'res-reg';
+    } else {
+      return 'res-not-reg';
+    }
+  }
+
   const ResidentInfo = ({ resident, isOpen, onClose }) => {
     if (!resident) return null;
   
@@ -290,11 +298,10 @@ function Records() {
               <th>Middle Name</th>
               <th>Birth Date</th>
               <th>Age</th>
-              <th>Place of Birth</th>
               <th>Address</th>
               <th>Gender</th>
               <th>Email</th>
-              <th>Phone Number</th>
+              <th>Voter Status</th>
             </tr>
           </thead>
           <tbody>
@@ -313,11 +320,10 @@ function Records() {
                 <td>{resident.middleName}</td>
                 <td>{resident.birthDate}</td>
                 <td>{resident.age}</td>
-                <td>{resident.placeBirth}</td>
                 <td>{resident.address}</td>
                 <td>{resident.gender}</td>
                 <td>{resident.email}</td>
-                <td>{resident.phoneNumber}</td>
+                <td><div className={borderStatus(resident.voterStatus)}>{resident.voterStatus}</div></td>
               </tr>
             ))
           ) : (

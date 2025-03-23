@@ -273,6 +273,22 @@ app.delete('/households/:id', async (req, res) => {
   }
 });
 
+// Delete all households
+app.delete('/households', async (req, res) => {
+  try {
+    const keys = await client.keys('household:*');
+    if (keys.length === 0) {
+      return res.status(404).json({ message: 'No household found to delete' });
+    }
+
+    await Promise.all(keys.map(key => client.del(key)));
+    res.status(200).json({ message: 'All households deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting all households:', error);
+    res.status(500).json({ message: 'Failed to delete all households' });
+  }
+});
+
 app.post('/upload-csv', upload.single('file'), async (req, res) => {
   const filePath = req.file.path;
   const residents = [];
@@ -408,6 +424,21 @@ app.delete('/businesses/:id', async (req, res) => {
     res.status(500).json({ message: 'Failed to delete business' });
   }
 });
+
+// Delete all households 
+app.delete('/businesses', async (req, res) => {
+  try {
+    const keys = await client.keys('business:*');
+    if (keys === 0) {
+      return res.status(404).json({ message: 'No businesses found to delete'});
+    }
+    await Promise.all(keys.map(key => client.del(key)));
+    res.status(200).json({ message: 'All businesses deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting all households:', error);
+    res.status(500).json({ message: 'Failed to delete all businesses' });
+  }
+})
 
 
 // Start server

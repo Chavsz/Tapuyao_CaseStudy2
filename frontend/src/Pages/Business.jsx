@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as mdIcons from "react-icons/md";
+import * as ioIcons from "react-icons/io5";
+import { ToastContainer, toast } from 'react-toastify';
 
 function Business() {
   const [businesses, setBusinesses] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [form, setForm] = useState({
     id: '',
     businessName: '',
@@ -72,6 +75,37 @@ function Business() {
     }
   };
 
+  // Delete all businesses
+  const handleDeleteAll = async () => {
+    try {
+      await axios.delete('http://localhost:5001/businesses');
+      toast.success('All businesses deleted successfully!');
+      fetchBusinesses();
+    } catch (error) {
+      toast.error('Error deleting all businesses!');
+      console.error('Error deleting all businesses', error);
+    }
+  };
+
+  // Handle search
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  //filter businesses
+  const filteredBusinesses = businesses.filter(bsns =>
+    bsns.businessName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    bsns.ownerName.toLowerCase().includes(searchTerm.toLowerCase()) 
+  );
+
+  const borderStatus = (status) => {
+    if (status === 'Registered') {
+      return 'bsns-reg';
+    } else {
+      return 'bsns-not-reg';
+    }
+  }
+
   return (
     <div className='business-container'>
 
@@ -136,6 +170,22 @@ function Business() {
         </form>
       </div>
 
+      <div className='handle-bsns'>
+        <div className='bsns-search-container'>
+          <input
+            className='search'
+            type="search"
+            placeholder="Search Households"
+            value={searchTerm}
+            onChange={handleSearchChange}
+          /> 
+          <div className='bsns-search-icon'>
+            <ioIcons.IoSearch/>
+          </div>
+        </div>
+        <button className="bsns-btn-del-all" onClick={handleDeleteAll}><mdIcons.MdDeleteOutline /></button>
+      </div>
+
       <table className='business-table'>
         <thead>
           <tr>
@@ -151,7 +201,8 @@ function Business() {
           </tr>
         </thead>
         <tbody>
-          {businesses.map((business) => (
+          {filteredBusinesses.length > 0 ? (
+            filteredBusinesses.map((business) => (
             <tr key={business.id}>
               <td>
                 <button className='business-edit' onClick={() => handleEdit(business)}><mdIcons.MdEdit /></button>
@@ -163,13 +214,18 @@ function Business() {
               <td>{business.businessAddress}</td>
               <td>{business.dateRegistered}</td>
               <td>{business.expiracyDate}</td>
-              <td>{business.businessStatus}</td>
+              <td><div className={borderStatus(business.businessStatus)}>{business.businessStatus}</div></td>
               <td>{business.contactNumber}</td>
             </tr>
-          ))}
+          ))
+          ) : (
+            <tr>
+              <td colSpan="9">No students found</td>
+            </tr>
+          )}
         </tbody>
       </table>
-
+    <ToastContainer />
     </div>
   );
 }

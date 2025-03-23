@@ -85,7 +85,7 @@
 
 .table-wrapper .table th, td {
   font-size: 13.5px;
-  padding: 2.5px 0;
+  padding: 3px 0;
   color: #868686;
 }
 
@@ -130,6 +130,24 @@
   background: #f8c0c0;
   padding: 3px 6px;
   border-radius: 3px;
+}
+
+.res-reg {
+  padding: 3px 8px;
+  border: 1px solid #0cd8fc;
+  border-radius: 12px;
+  color:  #0cd8fc;
+  font-weight: 600;
+  background: #dbfaff;
+}
+
+.res-not-reg {
+  padding: 3px 8px;
+  border: 1px solid #f82c48;
+  border-radius: 12px;
+  color:  #f82c48;
+  font-weight: 600;
+  background:#f5c7cd ;
 }
 
 /* form-style */
