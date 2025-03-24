@@ -88,7 +88,7 @@ function Business() {
   };
 
   // Handle search
-  const handleSearchChange = (e) => {
+  const handleBusinessSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
@@ -175,15 +175,16 @@ function Business() {
           <input
             className='search'
             type="search"
-            placeholder="Search Households"
+            placeholder="Search Business"
             value={searchTerm}
-            onChange={handleSearchChange}
+            onChange={handleBusinessSearchChange}
           /> 
           <div className='bsns-search-icon'>
             <ioIcons.IoSearch/>
           </div>
         </div>
         <button className="bsns-btn-del-all" onClick={handleDeleteAll}><mdIcons.MdDeleteOutline /></button>
+        <div className='total'>Businesses: {businesses.length}</div>
       </div>
 
       <table className='business-table'>
@@ -220,7 +221,7 @@ function Business() {
           ))
           ) : (
             <tr>
-              <td colSpan="9">No students found</td>
+              <td colSpan="9">No business found</td>
             </tr>
           )}
         </tbody>

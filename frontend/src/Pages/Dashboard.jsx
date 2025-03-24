@@ -59,6 +59,35 @@ function Home() {
     acc[resident.age] = (acc[resident.age] || 0) + 1;
     return acc;
   }, {});
+
+  // Count civilStatus
+  const civilStatusCounts = residents.reduce((acc, resident) => {
+    acc[resident.civilStatus] = (acc[resident.civilStatus] || 0) + 1;
+    return acc;
+    }, {});
+
+  const civilStatusData = [
+    { name: 'Single', count: civilStatusCounts['Single'] || 0 },
+    { name: 'Married', count: civilStatusCounts['Married'] || 0 },
+    { name: 'Separated', count: civilStatusCounts['Separated'] || 0 },
+    { name: 'Divorced', count: civilStatusCounts['Divorced'] || 0 },
+    { name: 'Widowed', count: civilStatusCounts['Widowed'] || 0 }
+  ];
+
+  const civilStatusChart = () => {
+    return (
+      <ResponsiveContainer width="100%" height={225}>
+      <BarChart data={civilStatusData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" label={{ value: "Civil Status", position: "bottom" }} />
+        <YAxis label={{ value: "Count", angle: -90, position: "insideLeft" }} />
+        <Tooltip />
+        <Bar dataKey="count" fill="#fcba03" radius={[5, 5, 0, 0]} />
+      </BarChart>
+    </ResponsiveContainer>
+    )
+
+  }
   
   const getCountInRange = (start, end) => {
     return Array.from({ length: end - start + 1 }, (_, i) => ageCounts[start + i] || 0).reduce((sum, count) => sum + count, 0);
@@ -222,6 +251,25 @@ const GrowthRateChart = () => {
               <faIcons.FaHouseUser  />
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className='new-chart'>
+        <div className='civil-status-chart'>
+          <p>Civil Status</p>
+          {civilStatusChart()}
+        </div>
+        <div className='recent-added-container'>
+          <p>Recent Resident Added</p>
+          <table className='recent-table'>
+            <tbody>
+              <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Age</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 

@@ -27,7 +27,7 @@ border-radius: 60px;
 position: absolute;
 top: 20px;
 left: 30px;
-animation: spin 4s linear infinite;
+animation: spin 3.5s linear infinite;
 }
 
 @keyframes spin {
@@ -59,14 +59,14 @@ border: none;
 outline: none;
 background: #fff;
 border-radius: 20px;
-color: #1171df;
+color: #000000;
 font-size: 15px;
 font-weight: 500;
 padding: 20px 45px 20px 20px;
 }
 
 input::placeholder {
-color: #fff;
+color: #7c7c7c;
 }
 
 .login-container .btn {
@@ -78,6 +78,7 @@ border: none;
 outline: none;
 border-radius: 35px;
 background: #fff;
+color: #1171df;
 }
 
 .login-container .reg {

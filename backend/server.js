@@ -171,7 +171,7 @@ app.delete('/residents', async (req, res) => {
 });
 
 // Admin Sign-in
-app.post('/admin/signin', async (req, res) => {
+app.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {

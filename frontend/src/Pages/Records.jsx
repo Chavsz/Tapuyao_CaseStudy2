@@ -105,7 +105,7 @@ function Records() {
     setSearchTerm(e.target.value);
   };
 
-  //filter students
+  //filter residents
   const filteredResidents = residents.filter(resident =>
     resident.firstName.toLowerCase().includes(searchTerm.toLowerCase()) 
   );
@@ -220,41 +220,81 @@ function Records() {
                 <input type="text" name="email" placeholder="Email" value={formData.email} onChange={handleChange}required />
               </div>
             </div>
-            <label>Place of Birth</label>
-            <input type="text" name="placeBirth" placeholder="Place of Birth" value={formData.placeBirth} onChange={handleChange} required  />
-            <label>Address</label>
-            <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} required />
 
-            <label>Gender</label>
-            <select name='gender' value={formData.gender} onChange={handleChange} required>
+            <div className='second-form'>
+              <div className='input-field'>
+                <label>Place of Birth</label>
+                <input type="text" name="placeBirth" placeholder="Place of Birth" value={formData.placeBirth} onChange={handleChange} required  />
+              </div>
+              <div className='input-field'>
+                <label>Address</label>
+                <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} required />  
+              </div>
+              <div className='input-field'>
+                <label>Phone Number</label>
+                <input type="number" name="phoneNumber" placeholder="Phone Number" value={formData.phoneNumber} onChange={handleChange}required  />
+              </div>
+            </div>
+              
+            <div className='second-form'>
+              <div className='input-field'>
+                <label>Gender</label>
+                <select name='gender' value={formData.gender} onChange={handleChange} required>
                   <option value="">Select Gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
-            </select>
+                </select>
+              </div>
 
-            <label>Voter Status</label>
-            <select name='voterStatus' value={formData.voterStatus} onChange={handleChange} required>
+              <div className='input-field'>
+                <label>Voter Status</label>
+                <select name='voterStatus' value={formData.voterStatus} onChange={handleChange} required>
                   <option value="">Select</option>
                   <option value="Registered">Registered</option>
                   <option value="Not Registered">Not Registered</option>
-            </select>
+                </select>
+              </div>
 
-            <label>Civil Status</label>
-            <input type="text" name="civilStatus" placeholder="Civil Status" value={formData.civilStatus} onChange={handleChange} required />
+              <div className='input-field'>
+                <label>Civil Status</label>
+                <select name='civilStatus' value={formData.civilStatus} onChange={handleChange} required>
+                  <option value="">Select</option>
+                  <option value="Single">Single</option>
+                  <option value="Married">Married</option>
+                  <option value="Separated">Separated</option>
+                  <option value="Divorced">Divorced</option>
+                  <option value="Widowed">Widowed</option>
+                </select>
+              </div>
+            </div>
             
-            <label>Phone Number</label>
-            <input type="number" name="phoneNumber" placeholder="Phone Number" value={formData.phoneNumber} onChange={handleChange}required  />
-            <p>Father</p>
-            <label>Last Name</label>
-            <input type="text" name="fatherLname" placeholder="Father Last Name" value={formData.fatherLname} onChange={handleChange} required  />
-            <label>First Name</label>
-            <input type="text" name="fatherFname" placeholder="Father First Name" value={formData.fatherFname} onChange={handleChange} required  />
-            <p>Mother</p>
-            <label>Last Name</label>
-            <input type="text" name="motherLname" placeholder="Mother Last Name" value={formData.motherLname} onChange={handleChange} required />
-            <label>First Name</label>
-            <input type="text" name="motherFname" placeholder="Mother First Name" value={formData.motherFname} onChange={handleChange} required />
-            <button type="submit">{isEditing ? 'Update Resident' : 'Add Resident'}</button>
+            <p className='input-field'>Father</p>
+            <div className='third-form'>
+              <div className='input-field'>
+                <label>Last Name</label>
+                <input type="text" name="fatherLname" placeholder="Father Last Name" value={formData.fatherLname} onChange={handleChange} required  />
+              </div>
+              <div className='input-field'>
+                <label>First Name</label>
+                <input type="text" name="fatherFname" placeholder="Father First Name" value={formData.fatherFname} onChange={handleChange} required  />
+              </div>
+            </div>
+
+            <p className='input-field'>Mother</p>
+            <div className='third-form'>
+              <div className='input-field'>
+                <label>Last Name</label>
+                <input type="text" name="motherLname" placeholder="Mother Last Name" value={formData.motherLname} onChange={handleChange} required />
+              </div>
+              <div className='input-field'>
+                <label>First Name</label>
+                <input type="text" name="motherFname" placeholder="Mother First Name" value={formData.motherFname} onChange={handleChange} required />
+              </div>
+            </div>
+
+            <div className='add-res-btn-container'>
+              <button className='add-res-btn' type="submit">{isEditing ? 'Update Resident' : 'Add Resident'}</button>
+            </div>
           </form>
         </div>
       </Modal>
@@ -285,7 +325,8 @@ function Records() {
           <input className='uploadBtn' id='uploadBtn' type="file" accept=".csv" onChange={handleFileUpload} />
           <label htmlFor="uploadBtn">Upload File</label>
         </div>
-        <button className="btn-del-all" onClick={handleDeleteAll}><mdIcons.MdDeleteOutline /></button>
+        <button className="btn-del-all" title='Delete All' onClick={handleDeleteAll}><mdIcons.MdDeleteOutline /></button>
+        <div className='total-res'>Residents: {residents.length}</div>
       </div>
       
       <div className='table-wrapper'>
@@ -298,7 +339,6 @@ function Records() {
               <th>Middle Name</th>
               <th>Birth Date</th>
               <th>Age</th>
-              <th>Address</th>
               <th>Gender</th>
               <th>Email</th>
               <th>Voter Status</th>
@@ -320,7 +360,6 @@ function Records() {
                 <td>{resident.middleName}</td>
                 <td>{resident.birthDate}</td>
                 <td>{resident.age}</td>
-                <td>{resident.address}</td>
                 <td>{resident.gender}</td>
                 <td>{resident.email}</td>
                 <td><div className={borderStatus(resident.voterStatus)}>{resident.voterStatus}</div></td>
@@ -328,7 +367,7 @@ function Records() {
             ))
           ) : (
             <tr>
-              <td colSpan="9">No students found</td>
+              <td colSpan="9">No Residents found</td>
             </tr>
           )}
 
@@ -342,7 +381,7 @@ function Records() {
               disabled={currentPage === 1}>
               &lt;
             </button>
-            <span className='pagin'> {currentPage} of {totalPages} </span>
+            <span className='pagin'> Page {currentPage} of {totalPages} </span>
             <button 
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
               disabled={currentPage === totalPages}>

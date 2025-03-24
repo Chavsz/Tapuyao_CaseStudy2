@@ -9,11 +9,12 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
-      navigate('/admin-login'); // Redirect to admin login page if not logged in
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/admin-login'); // Redirect to admin login if not logged in
     }
   }, [navigate]);
-
+  
   return (
     <Routes>
       <Route path="/admin-login" element={<AdminLogin />} />

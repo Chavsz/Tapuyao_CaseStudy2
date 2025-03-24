@@ -76,13 +76,13 @@ const deleteHousehold = async (id) => {
   };
 
   // Handle search
-  const handleSearchChange = (e) => {
+  const handleHouseholdsSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
   //filter households
   const filteredHouseholds = households.filter(household =>
-    household.id.toLowerCase().includes(searchTerm.toLowerCase()) 
+    household.houseName.toLowerCase().includes(searchTerm.toLowerCase()) 
   );
 
     // households information modal 
@@ -202,15 +202,17 @@ const deleteHousehold = async (id) => {
             <button className="btn" onClick={() => setIsModalOpenAdd(true)}>Add Resident</button>
 
             <button className="hh-btn-del-all" onClick={handleDeleteAll}><mdIcons.MdDeleteOutline /></button>
+
+            <button className='total-hsh'>Households: {households.length}</button>
           </div>
 
           <div className='household-search-container'>
             <input
               className='search'
               type="search"
-              placeholder="Search Residents"
+              placeholder="Search Household"
               value={searchTerm}
-              onChange={handleSearchChange}
+              onChange={handleHouseholdsSearchChange}
             /> 
             <div className='search-icon'>
               <ioIcons.IoSearch/>
@@ -242,7 +244,7 @@ const deleteHousehold = async (id) => {
                 ))
                 ) : (
                   <tr>
-                    <td colSpan="9">No students found</td>
+                    <td colSpan="9">No household found</td>
                   </tr>
                 )}
             </tbody>

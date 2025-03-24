@@ -39,7 +39,7 @@ function AdminLogin() {
       </div>
       <div className="login-container">
         <form className="login-form" onSubmit={handleLogin}>
-          <h2>Admin Login</h2>
+          <h2>Welcome</h2>
           {error && <p className="error-message">{error}</p>}
           <div className='input'>
             <input 
