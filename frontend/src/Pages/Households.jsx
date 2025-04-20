@@ -165,17 +165,17 @@ const deleteHousehold = async (id) => {
                   </div>
                   <div className='input-field-hsh'>
                     <label>Gender</label>
-                    <input
-                      type="text"
-                      placeholder="Gender"
-                      value={resident.gender}
-                      onChange={(e) => {
-                          const newResidents = [...residents];
-                          newResidents[index].gender = e.target.value;
-                          setResidents(newResidents);
-                      }}
-                      required
-                    />
+
+                    <select className='gender-hsh' name='gender' value={resident.gender}  onChange={(e) => {
+                        const newResidents = [...residents];
+                        newResidents[index].gender = e.target.value;
+                        setResidents(newResidents);
+                      }} 
+                      required>
+                      <option value="">Select Gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
                   </div>
                   <div className='input-field-hsh'>
                     <label>Age</label>
@@ -214,9 +214,6 @@ const deleteHousehold = async (id) => {
               value={searchTerm}
               onChange={handleHouseholdsSearchChange}
             /> 
-            <div className='search-icon'>
-              <ioIcons.IoSearch/>
-            </div>
           </div>
         </div>
 

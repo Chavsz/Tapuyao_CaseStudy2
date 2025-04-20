@@ -9,12 +9,14 @@ import { LineChart, Line, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContai
 
 const API_URL = {
   residents: 'http://localhost:5001/residents',
-  households: 'http://localhost:5001/households'
+  households: 'http://localhost:5001/households',
+  recent: 'http://localhost:5001/recent-residents'
 }
 
 function Home() {
   const [residents, setResidents] = useState([]);
   const [households, setHouseholds] = useState([]);
+  const [recentResidents, setRecentResidents] = useState([]);
 
   // Fetch all residents
   const fetchResidents = async () => {
@@ -36,9 +38,19 @@ function Home() {
     }
   };
 
+  const fetchRecentResidents = async () => {
+    try {
+      const response = await axios.get(API_URL.recent);
+      setRecentResidents(response.data);
+    } catch (error) {
+      console.error('Error fetching recent residents:', error);
+    }
+  };
+
   useEffect(() => {
       fetchResidents();
       fetchHouseholds();
+      fetchRecentResidents();
     }, []);
 
   
@@ -260,16 +272,26 @@ const GrowthRateChart = () => {
           {civilStatusChart()}
         </div>
         <div className='recent-added-container'>
-          <p>Recent Resident Added</p>
+          <p>Recent Residents Added</p>
           <table className='recent-table'>
+            {/* <tbody>
+              <tr>
+              {recentResidents.map((resident) => (
+                <td key={resident.id}>
+                  {resident.firstName} {resident.lastName}
+                </td>
+              ))}
+              </tr>
+            </tbody> */}
             <tbody>
               <tr>
-                <td>ID</td>
+                <td>Id</td>
                 <td>Name</td>
                 <td>Age</td>
               </tr>
             </tbody>
           </table>
+          
         </div>
       </div>
 

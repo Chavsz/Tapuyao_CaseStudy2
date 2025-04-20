@@ -21,7 +21,6 @@ function Records() {
   const [isResidentInfoOpen, setIsResidentInfoOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
-  const [theme, setTheme] = useState("light")
   // Fetch all residents
   const fetchResidents = async () => {
     try {
@@ -45,11 +44,15 @@ function Records() {
   const handleAddSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(API_URL, formData);
-      toast.success('resident added successfully!');
+      if (isEditing) {
+        await axios.put(`${API_URL}/${formData.id}`, formData);
+      } else {
+        await axios.post(API_URL, formData);
+      }
       fetchResidents();
       setFormData({ id: '', firstName: '', lastName: '', middleName: '', birthDate: '', age: '', placeBirth: '', address: '', gender: '', voterStatus: '', civilStatus: '', email: '', phoneNumber: '', fatherLname: '', fatherFname: '', motherLname: '', motherFname: ''   });
       setIsModalOpen(false);
+      setIsEditing(false);
     } catch (error) {
       toast.error('Error adding resident!');
     }
@@ -107,7 +110,11 @@ function Records() {
 
   //filter residents
   const filteredResidents = residents.filter(resident =>
-    resident.firstName.toLowerCase().includes(searchTerm.toLowerCase()) 
+    resident.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    resident.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    resident.gender.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    resident.voterStatus.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    resident.civilStatus.toLowerCase().includes(searchTerm.toLowerCase()) 
   );
 
   const handleFileUpload = async (e) => {
@@ -167,10 +174,12 @@ function Records() {
           <p>Civil Status: {resident.civilStatus}</p>
           <p>Email: {resident.email}</p>
           <p>Phone Number: {resident.phoneNumber}</p>
-          <p>Father's Last Name: {resident.fatherLname}</p>
-          <p>Father's First Name: {resident.fatherFname}</p>
-          <p>Mother's Last Name: {resident.motherLname}</p>
-          <p>Mother's First Name: {resident.motherFname}</p>
+          <p>Father</p>
+          <p>Last Name: {resident.fatherLname}</p>
+          <p>First Name: {resident.fatherFname}</p>
+          <p>Mother</p>
+          <p>Last Name: {resident.motherLname}</p>
+          <p>First Name: {resident.motherFname}</p>
         </div>
       </Modal>
     );
@@ -309,9 +318,6 @@ function Records() {
 
       <div className='handle-residents'>
         <div className='search-container'>
-          <div className='search-icon'>
-            <ioIcons5.IoSearch/>
-          </div>
           <input
             className='search'
             type="search"
@@ -341,6 +347,7 @@ function Records() {
               <th>Age</th>
               <th>Gender</th>
               <th>Email</th>
+              <th>Civil Status</th>
               <th>Voter Status</th>
             </tr>
           </thead>
@@ -362,6 +369,7 @@ function Records() {
                 <td>{resident.age}</td>
                 <td>{resident.gender}</td>
                 <td>{resident.email}</td>
+                <td>{resident.civilStatus}</td>
                 <td><div className={borderStatus(resident.voterStatus)}>{resident.voterStatus}</div></td>
               </tr>
             ))

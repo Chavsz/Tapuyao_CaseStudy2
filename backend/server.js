@@ -22,7 +22,7 @@ const upload = multer({ dest: 'uploads/' });
 
 // Connect to Redis
 const client = redis.createClient({
-  url: 'redis://@127.0.0.1:6379'  // Default Redis connection
+  url: 'redis://@127.0.0.1:6379'  // Default Redis connection 
 });
 
 client.connect()
@@ -59,8 +59,9 @@ app.post('/residents', async (req, res) => {
   }
 
   try {
+    const timestamp = Date.now();
     // Set resident data in Redis (using object syntax for Redis v4 and above)
-    const residentData = { firstName, lastName, middleName, birthDate, age, placeBirth, address, gender, voterStatus, civilStatus, email, phoneNumber, fatherLname, fatherFname, motherLname, motherFname };
+    const residentData = { firstName, lastName, middleName, birthDate, age, placeBirth, address, gender, voterStatus, civilStatus, email, phoneNumber, fatherLname, fatherFname, motherLname, motherFname, timestamp };
 
     // Save resident data in Redis hash
     await client.hSet(`resident:${id}`, 'firstName', residentData.firstName);
@@ -80,11 +81,30 @@ app.post('/residents', async (req, res) => {
     await client.hSet(`resident:${id}`, 'motherLname', residentData.motherLname);
     await client.hSet(`resident:${id}`, 'motherFname', residentData.motherFname);
     
+
+    await client.zAdd('recent_residents', [{ score: timestamp, value: id }]);
+    
     // Respond with success message
     res.status(201).json({ message: 'resident saved successfully' });
   } catch (error) {
     console.error('Error saving resident:', error);
     res.status(500).json({ message: 'Failed to save resident' });
+  }
+});
+
+app.get('/recent-residents', async (req, res) => {
+  try {
+    const residentIds = await client.zRange('recent_residents', -3, -1, { REV: true }); // Get last 3 residents
+
+    const residents = await Promise.all(residentIds.map(async (id) => {
+      const resident = await client.hGetAll(`resident:${id}`);
+      return { id, ...resident };
+    }));
+
+    res.json(residents);
+  } catch (error) {
+    console.error('Error fetching recent residents:', error);
+    res.status(500).json({ message: 'Failed to retrieve recent residents' });
   }
 });
 
@@ -399,12 +419,12 @@ app.put('/businesses/:id', async (req, res) => {
     }
 
     if (businessName) await client.hSet(`business:${id}`,'businessName',businessName )
-    if ( ownerName) await client.hSet(`business:${id}`,' ownerName',  ownerName)
+    if ( ownerName) await client.hSet(`business:${id}`,'ownerName',  ownerName)
     if (businessAddress) await client.hSet(`business:${id}`,'businessAddress',businessAddress )
     if (dateRegistered) await client.hSet(`business:${id}`,'dateRegistered',dateRegistered )
     if (expiracyDate) await client.hSet(`business:${id}`,'expiracyDate',expiracyDate)
     if (businessStatus) await client.hSet(`business:${id}`,'businessStatus',businessStatus)
-    if (contactNumber) await client.hSet(`business:${id}`,' contactNumber', contactNumber )
+    if (contactNumber) await client.hSet(`business:${id}`,'contactNumber', contactNumber )
 
     res.status(200).json( {message: 'business updates successfully'} )
   } catch (error) {

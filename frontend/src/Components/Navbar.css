@@ -36,7 +36,9 @@ span {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 31px 0;
+  padding: 27px 0;
+  border-bottom: 2px solid #fff;
+  margin: 0 15px;
 }
 
 .barangay-icon svg {
