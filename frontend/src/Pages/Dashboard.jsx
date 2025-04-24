@@ -274,24 +274,29 @@ const GrowthRateChart = () => {
         <div className='recent-added-container'>
           <p>Recent Residents Added</p>
           <table className='recent-table'>
-            {/* <tbody>
+            <thead>
               <tr>
-              {recentResidents.map((resident) => (
-                <td key={resident.id}>
-                  {resident.firstName} {resident.lastName}
-                </td>
-              ))}
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
               </tr>
-            </tbody> */}
+            </thead>
             <tbody>
-              <tr>
-                <td>Id</td>
-                <td>Name</td>
-                <td>Age</td>
-              </tr>
+              {recentResidents.length > 0 ? (
+                recentResidents.map((resident) => (
+                  <tr key={resident.id}>
+                    <td>{resident.id}</td>
+                    <td>{`${resident.firstName} ${resident.lastName}`}</td>
+                    <td>{resident.age}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3">No recent residents</td>
+                </tr>
+              )}
             </tbody>
           </table>
-          
         </div>
       </div>
 
