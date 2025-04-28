@@ -520,6 +520,48 @@ app.delete('/businesses', async (req, res) => {
   }
 });
 
+// QR Code scanning endpoint
+app.post('/scan-qr', async (req, res) => {
+  try {
+    const { data } = req.body;
+    const residentData = JSON.parse(data);
+    
+    if (!residentData.id) {
+      return res.status(400).json({ message: 'Invalid QR code data' });
+    }
+
+    const resident = await Resident.findOne({ id: residentData.id });
+    if (!resident) {
+      return res.status(404).json({ message: 'Resident not found' });
+    }
+
+    res.json(resident);
+  } catch (error) {
+    console.error('Error processing QR code:', error);
+    res.status(500).json({ message: 'Error processing QR code' });
+  }
+});
+
+// Export residents to CSV
+app.get('/export-residents', async (req, res) => {
+  try {
+    const residents = await Resident.find();
+    const csvHeader = 'id,firstName,lastName,middleName,birthDate,age,placeBirth,address,gender,voterStatus,civilStatus,email,phoneNumber,fatherLname,fatherFname,motherLname,motherFname\n';
+    let csvContent = csvHeader;
+    
+    residents.forEach(resident => {
+      csvContent += `${resident.id},"${resident.firstName}","${resident.lastName}","${resident.middleName}","${resident.birthDate}","${resident.age}","${resident.placeBirth}","${resident.address}","${resident.gender}","${resident.voterStatus}","${resident.civilStatus}","${resident.email}","${resident.phoneNumber}","${resident.fatherLname}","${resident.fatherFname}","${resident.motherLname}","${resident.motherFname}"\n`;
+    });
+
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename=residents_backup.csv');
+    res.send(csvContent);
+  } catch (error) {
+    console.error('Error exporting residents:', error);
+    res.status(500).json({ message: 'Failed to export residents' });
+  }
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

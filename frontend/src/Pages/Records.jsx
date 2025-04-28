@@ -7,9 +7,13 @@ import Modal from "../modal";
 import * as ioIcons5 from "react-icons/io5";
 import * as ioIcons from "react-icons/io5";
 import * as mdIcons from "react-icons/md";
+import { QRCodeCanvas } from 'qrcode.react';
 
 const API_URL = 'http://localhost:5001/residents';
 const UPLOAD_URL = 'http://localhost:5001/upload-csv';
+
+// Add export URL constant
+const EXPORT_URL = 'http://localhost:5001/export-residents';
 
 function Records() {
   const [formData, setFormData] = useState({ id: '', firstName: '', lastName: '', middleName: '', birthDate: '', age: '', placeBirth: '', address: '', gender: '', voterStatus: '', civilStatus: '', email: '', phoneNumber: '', fatherLname: '', fatherFname: '', motherLname: '', motherFname: ''  });
@@ -20,6 +24,7 @@ function Records() {
   const [selectedResident, setSelectedResident] = useState(null);
   const [isResidentInfoOpen, setIsResidentInfoOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [showQR, setShowQR] = useState(false);
   const rowsPerPage = 10;
   // Fetch all residents
   const fetchResidents = async () => {
@@ -136,6 +141,15 @@ function Records() {
     }
   };
 
+  const handleExport = async () => {
+    try {
+      window.open(EXPORT_URL, '_blank');
+      toast.success('Exporting residents data...');
+    } catch (error) {
+      toast.error('Error exporting residents data!');
+    }
+  };
+
   const indexOfLastStudent = currentPage * rowsPerPage;
   const indexOfFirstStudent = indexOfLastStudent - rowsPerPage;
   const currentResidents = filteredResidents.slice(indexOfFirstStudent, indexOfLastStudent);
@@ -161,6 +175,15 @@ function Records() {
       <Modal isOpen={isOpen} onClose={onClose}>
         <div className='resident-info'>
           <h2>Resident Information</h2>
+          {showQR && (
+            <div className="qr-code-container">
+              <QRCodeCanvas value={JSON.stringify(resident)} size={256} />
+              <button onClick={() => setShowQR(false)}>Hide QR Code</button>
+            </div>
+          )}
+          {!showQR && (
+            <button onClick={() => setShowQR(true)}>Show QR Code</button>
+          )}
           <p>ID: {resident.id}</p>
           <p>First Name: {resident.firstName}</p>
           <p>Last Name: {resident.lastName}</p>
@@ -331,6 +354,7 @@ function Records() {
           <input className='uploadBtn' id='uploadBtn' type="file" accept=".csv" onChange={handleFileUpload} />
           <label htmlFor="uploadBtn">Upload File</label>
         </div>
+        <button className="btn" onClick={handleExport}>Export CSV</button>
         <button className="btn-del-all" title='Delete All' onClick={handleDeleteAll}><mdIcons.MdDeleteOutline /></button>
         <div className='total-res'>Residents: {residents.length}</div>
       </div>
