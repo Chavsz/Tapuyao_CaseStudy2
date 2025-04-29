@@ -31,9 +31,8 @@
 
 /* grid */
 .container {
-  padding: 18px 10px;
   display: grid;
-  grid-template-columns: 190px 1fr;
+  grid-template-columns: 210px 1fr;
   grid-template-rows: 1fr 1fr;
   grid-template-areas: 
   "side main"
@@ -45,15 +44,14 @@
 .sidebar {
   background: #1171df;
   grid-area:side ;
-  border-radius: 9px;
-  width: 190px;
+  width: 210px;
   position: fixed;
-  height: 95.4%;
+  height: 100%;
 }
 
 .main {
   grid-area: main;
-  padding-left: 18px;
+  padding: 16px 21px;
   width: 100%;
 
 }
