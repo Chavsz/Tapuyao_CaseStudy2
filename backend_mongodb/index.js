@@ -70,11 +70,22 @@ const BusinessSchema = new mongoose.Schema({
   contactNumber: { type: String, required: true }
 });
 
+const DisasterSchema = new mongoose.Schema({
+  id: { type: String, required: true, unique: true },
+  type: { type: String, required: true },
+  date: { type: String, required: true },
+  location: { type: String, required: true },
+  severity: { type: String, required: true },
+  households: { type: Number, required: true },
+  residents: { type: Number, required: true }
+});
+
 // Create models
 const Resident = mongoose.model('Resident', ResidentSchema);
 const Admin = mongoose.model('Admin', AdminSchema);
 const Household = mongoose.model('Household', HouseholdSchema);
 const Business = mongoose.model('Business', BusinessSchema);
+const Disaster = mongoose.model('Disaster', DisasterSchema);
 
 // Default admin credentials
 const defaultAdmin = {
@@ -559,6 +570,66 @@ app.get('/export-residents', async (req, res) => {
   } catch (error) {
     console.error('Error exporting residents:', error);
     res.status(500).json({ message: 'Failed to export residents' });
+  }
+});
+
+//Disaster
+// Create new disaster
+app.post('/disasters', async (req, res) => {
+  try {
+    const { type, date, location, severity, households, residents } = req.body;
+    const id = (await Disaster.countDocuments() + 1).toString().padStart(3, '0');
+    
+    const newDisaster = new Disaster({
+      id,
+      type,
+      date,
+      location,
+      severity,
+      households,
+      residents
+    });
+
+    await newDisaster.save();
+    res.status(201).json({ message: 'Disaster logged successfully', disaster: newDisaster });
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating disaster log', error: error.message });
+  }
+});
+
+// Get all disasters
+app.get('/disasters', async (req, res) => {
+  try {
+    const disasters = await Disaster.find();
+    res.json(disasters);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching disasters', error: error.message });
+  }
+});
+
+// Delete disaster
+app.delete('/disasters/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Disaster.findOneAndDelete({ id });
+    res.json({ message: 'Disaster deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting disaster', error: error.message });
+  }
+});
+
+// Update disaster
+app.put('/disasters/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const update = req.body;
+    const disaster = await Disaster.findOneAndUpdate({ id }, update, { new: true });
+    if (!disaster) {
+      return res.status(404).json({ message: 'Disaster not found' });
+    }
+    res.json({ message: 'Disaster updated successfully', disaster });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating disaster', error: error.message });
   }
 });
 

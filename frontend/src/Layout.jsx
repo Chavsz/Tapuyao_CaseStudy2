@@ -6,6 +6,7 @@ import Records from "./Pages/Records"
 import Settings from "./Pages/Settings";
 import Households from "./Pages/Households";
 import Business from "./Pages/Business";
+import Disaster from "./Pages/Disaster";
 import { ToastContainer } from "react-toastify";
 import './App.css';
 
@@ -20,6 +21,7 @@ function Layout() {
           <Route path="/records" element={<Records />} />
           <Route path="/households" element={<Households />} />
           <Route path="/business" element={<Business />} />
+          <Route path="/disaster" element={<Disaster />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="*" element={<Dashboard />} />
         </Routes>

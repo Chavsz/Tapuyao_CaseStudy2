@@ -130,11 +130,17 @@ function Home() {
     return (
       <ResponsiveContainer width="100%" height={290}>
         <BarChart data={ageData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
           <XAxis dataKey="ageRange" label={{ value: "Age Range", position: "bottom" }} />
           <YAxis label={{ value: "Count", angle: -90, position: "insideLeft" }} />
           <Tooltip />
-          <Bar dataKey="count" fill="#fcba03" radius={[5, 5, 0, 0]} />
+          <Bar 
+            dataKey="count" 
+            fill="#fcba03" 
+            radius={[5, 5, 0, 0]}
+            animationDuration={1500}
+            animationBegin={200}
+          />
         </BarChart>
       </ResponsiveContainer>
     );
@@ -166,11 +172,20 @@ const GrowthRateChart = () => {
   return (
     <ResponsiveContainer width="100%" height={225}>
       <LineChart data={growthRateData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-        <CartesianGrid strokeDasharray="3 3" />
+        <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
         <XAxis dataKey="name" label={{ value: 'Censual Year', position: 'bottom' }} />
         <YAxis label={{ value: 'Growth Rate (%)', angle: -90, position: 'insideLeft' }} />
         <Tooltip content={<CustomTooltip />} />
-        <Line type="monotone" dataKey="growthRate" stroke="#fc4103" activeDot={{ r: 8 }} />
+        <Line 
+          type="monotone" 
+          dataKey="growthRate" 
+          stroke="#fc4103" 
+          strokeWidth={2}
+          activeDot={{ r: 8 }}
+          dot={{ r: 4 }}
+          animationDuration={1500}
+          animationBegin={200}
+        />
       </LineChart>
     </ResponsiveContainer>
   );
@@ -190,11 +205,20 @@ const GrowthRateChart = () => {
     return (
       <ResponsiveContainer width="100%" height={225}>
         <LineChart data={populationData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
           <XAxis dataKey="name" label={{ value: "Censual Year", position: "bottom" }}  />
           <YAxis label={{ value: "Population", angle: -90, position: "insideLeft" }} />
           <Tooltip />
-          <Line type="monotone" dataKey="population" stroke="#02db18" activeDot={{ r: 8 }} />
+          <Line 
+            type="monotone" 
+            dataKey="population" 
+            stroke="#02db18" 
+            strokeWidth={2}
+            activeDot={{ r: 8 }}
+            dot={{ r: 4 }}
+            animationDuration={1500}
+            animationBegin={200}
+          />
         </LineChart>
       </ResponsiveContainer>
     );

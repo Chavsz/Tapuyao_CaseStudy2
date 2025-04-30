@@ -3,6 +3,7 @@ import * as FaIcons  from "react-icons/fa";
 import * as IoIcons from "react-icons/io";
 import * as bsIcons from "react-icons/bs";
 import * as faIcons from "react-icons/fa";
+import * as tbIcons  from "react-icons/tb";
 
 export const SideBarData = [
   {
@@ -27,6 +28,12 @@ export const SideBarData = [
     title: 'Businesses',
     path: '/business',
     icon: <faIcons.FaMoneyCheckAlt />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Disaster',
+    path: '/disaster',
+    icon: <tbIcons.TbAlertSquare />,
     cName: 'nav-text'
   },
   {

@@ -3,6 +3,7 @@ import axios from 'axios';
 import * as mdIcons from "react-icons/md";
 import * as ioIcons from "react-icons/io5";
 import { ToastContainer, toast } from 'react-toastify';
+import './Business.css';
 
 function Business() {
   const [businesses, setBusinesses] = useState([]);

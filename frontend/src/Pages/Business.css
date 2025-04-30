@@ -1,0 +1,297 @@
+/* business container */
+.business-container {
+  background-color: #f5f7fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.business-container .business-header {
+  width: 100%;
+  padding: 10px 0 20px 0;
+  border-bottom: 1px solid #e0e6ed;
+  margin-bottom: 20px;
+}
+
+.business-header p {
+  font-weight: 700;
+  font-size: 28px;
+  color: #1171df;
+  margin: 0;
+}
+
+/* Form styling */
+.business-container .bsns-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #e0e6ed;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 25px;
+  margin: 0 0 30px 0;
+  border-radius: 10px;
+}
+
+.bsns-form form {
+  width: 100%;
+}
+
+.bsns-form .bsns-form-1 {
+  display: flex;
+  gap: 2em;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.bsns-form-1 .input-bsns {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 250px;
+}
+
+.input-bsns label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 6px;
+}
+
+.input-bsns input, 
+.input-bsns select {
+  width: 100%;
+  height: 40px;
+  outline: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 14px;
+  padding: 0 12px;
+  transition: all 0.2s ease;
+  background-color: #f8fafc;
+}
+
+.input-bsns input:focus, 
+.input-bsns select:focus {
+  border-color: #1171df;
+  box-shadow: 0 0 0 3px rgba(17, 113, 223, 0.1);
+}
+
+.bsns-form-btn {
+  background: #1171df;
+  color: white;
+  font-weight: 600;
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+  font-size: 15px;
+  letter-spacing: 0.3px;
+  display: block;
+  width: 200px;
+  text-align: center;
+}
+
+.bsns-form-btn:hover {
+  background: #0d5cb6;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(17, 113, 223, 0.2);
+}
+
+/* Handle business section */
+.handle-bsns {
+  width: 100%;
+  display: flex;
+  gap: 1em;
+  margin-bottom: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.bsns-search-container {
+  position: relative;
+  flex-grow: 1;
+  max-width: 400px;
+}
+
+.bsns-search-container .search {
+  width: 100%;
+  height: 40px;
+  padding-left: 40px;
+  outline: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: white;
+  transition: all 0.2s ease;
+}
+
+.bsns-search-container .search:focus {
+  border-color: #1171df;
+  box-shadow: 0 0 0 3px rgba(17, 113, 223, 0.1);
+}
+
+.bsns-search-container .bsns-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  color: #1171df;
+  font-size: 18px;
+  transform: translateY(-50%);
+}
+
+.bsns-btn-del-all {
+  background: #ff5252;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+  height: 40px;
+}
+
+.bsns-btn-del-all:hover {
+  background: #e03a3a;
+}
+
+.total {
+  background-color: #1171df;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+/* Business table */
+.business-table {
+  text-align: left;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.business-table thead {
+  background: #1171df;
+  color: #fff;
+}
+
+.business-table th {
+  padding: 14px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.business-table tbody {
+  background: #fff;
+}
+
+.business-table tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.2s;
+}
+
+.business-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.business-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.business-table tbody td {
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #4a5568;
+}
+
+.business-edit,
+.business-del {
+  margin-right: 8px;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.business-edit {
+  background: rgba(17, 113, 223, 0.1);
+}
+
+.business-edit svg {
+  fill: #1171df;
+}
+
+.business-edit:hover {
+  background: rgba(17, 113, 223, 0.2);
+}
+
+.business-del {
+  background: rgba(236, 26, 26, 0.1);
+}
+
+.business-del svg {
+  fill: #ec1a1a;
+}
+
+.business-del:hover {
+  background: rgba(236, 26, 26, 0.2);
+}
+
+/* Status badges */
+.bsns-reg,
+.bsns-not-reg {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 13px;
+  display: inline-block;
+  text-align: center;
+}
+
+.bsns-reg {
+  border: none;
+  color: #06b6d4;
+  background: rgba(6, 182, 212, 0.1);
+}
+
+.bsns-not-reg {
+  border: none;
+  color: #f43f5e;
+  background: rgba(244, 63, 94, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .bsns-form-1 {
+    flex-direction: column;
+    gap: 1em;
+  }
+  
+  .input-bsns {
+    width: 100%;
+  }
+  
+  .bsns-form-btn {
+    width: 100%;
+  }
+}
