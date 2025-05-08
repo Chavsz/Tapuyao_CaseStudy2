@@ -26,6 +26,13 @@
 
 .nav-menu-items {
   width: 100%;
+  height: calc(90vh - 100px);
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-menu-items .logout {
+  margin-top: auto;
 }
 
 span {

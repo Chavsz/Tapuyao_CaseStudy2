@@ -4,6 +4,7 @@ import * as IoIcons from "react-icons/io";
 import * as bsIcons from "react-icons/bs";
 import * as faIcons from "react-icons/fa";
 import * as tbIcons  from "react-icons/tb";
+import * as riIcons from "react-icons/ri";
 
 export const SideBarData = [
   {
@@ -41,5 +42,11 @@ export const SideBarData = [
     path: '/settings',
     icon: <IoIcons.IoIosSettings />,
     cName: 'nav-text'
+  },
+  {
+    title: 'Logout',
+    path: '/logout',
+    icon: <riIcons.RiLogoutBoxRLine />,
+    cName: 'nav-text logout'
   }
 ]

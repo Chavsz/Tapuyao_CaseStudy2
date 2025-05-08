@@ -25,12 +25,6 @@ function Navbar() {
               </li>
             )
           })}
-          <li className='nav-text'>
-            <Link to='/logout'>
-              <riIcons.RiLogoutBoxRLine />
-              <span>Logout</span>
-            </Link>
-          </li>
         </ul>
       </nav>
       </IconContext.Provider>
