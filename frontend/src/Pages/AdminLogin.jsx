@@ -6,9 +6,10 @@ import './Admin_Login_Signup.css';
 const API_URL = 'http://localhost:5001/login';
 
 function AdminLogin() {
-  const [username, setUsername] = useState(''); 
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,9 +20,10 @@ function AdminLogin() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     try {
-      const response = await axios.post(API_URL, { username, password }); 
+      const response = await axios.post(API_URL, { username, password });
       localStorage.setItem('token', response.data.token);
 
       setUsername('');
@@ -30,38 +32,75 @@ function AdminLogin() {
       navigate('/'); // Navigate to the dashboard after successful login
     } catch (err) {
       setError('Invalid credentials, please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className='login-container-1'>
-      <div className='elena'> 
-      </div>
-      <div className="login-container">
-        <form className="login-form" onSubmit={handleLogin}>
-          <h2>Welcome</h2>
-          {error && <p className="error-message">{error}</p>}
-          <div className='input'>
-            <input 
-              type="text" 
-              placeholder="Username" 
-              value={username} 
-              onChange={(e) => setUsername(e.target.value)} // Updated to username
-              required
-            />
+    <div className='login-page'>
+      <div className='login-container-1'>
+        <div className='logo-wrapper'>
+          <div className='elena'></div>
+          <h1 className='city-title'>City Portal</h1>
+        </div>
+        
+        <div className="login-card">
+          <div className="login-header">
+            <h2>Admin Login</h2>
+            <p className="welcome-text">Welcome back! Please enter your credentials</p>
           </div>
-          <div className='input'>
-            <input 
-              type="password" 
-              placeholder="Password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+          
+          {error && <div className="error-message"><i className="error-icon">!</i>{error}</div>}
+          
+          <form className="login-form" onSubmit={handleLogin}>
+            <div className='form-group'>
+              <label htmlFor="username">Username</label>
+              <div className='input-wrapper'>
+                <i className="input-icon user-icon"></i>
+                <input 
+                  id="username"
+                  type="text" 
+                  placeholder="Enter your username" 
+                  value={username} 
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+            
+            <div className='form-group'>
+              <label htmlFor="password">Password</label>
+              <div className='input-wrapper'>
+                <i className="input-icon password-icon"></i>
+                <input 
+                  id="password"
+                  type="password" 
+                  placeholder="Enter your password" 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
 
-          <button type="submit" className='btn'>Enter</button>
-        </form>
+            <div className="forgot-password">
+              <a href="#">Forgot password?</a>
+            </div>
+            
+            <button 
+              type="submit" 
+              className={`btn login-btn ${loading ? 'loading' : ''}`}
+              disabled={loading}
+            >
+              {loading ? 'Logging in...' : 'Log In'}
+            </button>
+          </form>
+          
+          <div className="login-footer">
+            <p>Don't have an account? <a href="#" className="signup-link">Contact Admin</a></p>
+          </div>
+        </div>
       </div>
     </div>
   );
