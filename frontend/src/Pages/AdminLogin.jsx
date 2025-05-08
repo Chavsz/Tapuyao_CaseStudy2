@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Admin_Login_Signup.css';
+import  * as riIcons from "react-icons/ri";
+import * as io5Icons from "react-icons/io5";
 
 const API_URL = 'http://localhost:5001/login';
 
@@ -42,7 +44,6 @@ function AdminLogin() {
       <div className='login-container-1'>
         <div className='logo-wrapper'>
           <div className='elena'></div>
-          <h1 className='city-title'>City Portal</h1>
         </div>
         
         <div className="login-card">
@@ -57,7 +58,9 @@ function AdminLogin() {
             <div className='form-group'>
               <label htmlFor="username">Username</label>
               <div className='input-wrapper'>
-                <i className="input-icon user-icon"></i>
+                <div className="input-icon">
+                  <riIcons.RiUser3Fill />
+                </div>
                 <input 
                   id="username"
                   type="text" 
@@ -72,20 +75,18 @@ function AdminLogin() {
             <div className='form-group'>
               <label htmlFor="password">Password</label>
               <div className='input-wrapper'>
-                <i className="input-icon password-icon"></i>
+                <div className="input-icon">
+                  <riIcons.RiLockPasswordFill />
+                </div>
                 <input 
                   id="password"
-                  type="password" 
+                  type="password"   
                   placeholder="Enter your password" 
                   value={password} 
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
-            </div>
-
-            <div className="forgot-password">
-              <a href="#">Forgot password?</a>
             </div>
             
             <button 
@@ -97,9 +98,6 @@ function AdminLogin() {
             </button>
           </form>
           
-          <div className="login-footer">
-            <p>Don't have an account? <a href="#" className="signup-link">Contact Admin</a></p>
-          </div>
         </div>
       </div>
     </div>

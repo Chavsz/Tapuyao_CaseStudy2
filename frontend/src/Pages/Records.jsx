@@ -70,10 +70,12 @@ function Records() {
     try {
       if (isEditing) {
         await axios.put(`${API_URL}/${formData.id}`, formData);
+        toast.success("Resident updated successfully!");
       } else {
         await axios.post(API_URL, formData);
+        toast.success("Resident added successfully!");
       }
-      fetchResidents();
+      await fetchResidents();
       setFormData({
         id: "",
         firstName: "",
@@ -95,8 +97,9 @@ function Records() {
       });
       setIsModalOpen(false);
       setIsEditing(false);
+      document.body.style.overflow = 'auto';
     } catch (error) {
-      toast.error("Error adding resident!");
+      toast.error(isEditing ? "Error updating resident!" : "Error adding resident!");
     }
   };
 
@@ -105,8 +108,8 @@ function Records() {
     e.preventDefault();
     try {
       await axios.put(`${API_URL}/${formData.id}`, formData);
-      toast.success("resident updated successfully!");
-      fetchResidents();
+      toast.success("Resident updated successfully!");
+      await fetchResidents();
       setFormData({
         id: "",
         firstName: "",
@@ -128,6 +131,7 @@ function Records() {
       });
       setIsEditing(false);
       setIsModalOpen(false);
+      document.body.style.overflow = 'auto';
     } catch (error) {
       toast.error("Error updating resident!");
     }
@@ -269,7 +273,10 @@ function Records() {
 
   return (
     <div className="records">
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+      <Modal isOpen={isModalOpen} onClose={() => {
+        setIsModalOpen(false);
+        document.body.style.overflow = 'auto';
+      }}>
         <div className="form">
           <form onSubmit={handleAddSubmit}>
             <div className="id-form">

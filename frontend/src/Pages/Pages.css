@@ -147,6 +147,14 @@
   table-layout: fixed;
   border-collapse: collapse;
   border-bottom: 1px solid #000;
+}
+
+.recent-table thead {
+  background: #1171df;
+  color: #fff;
+}
+
+.recent-table th {
   text-align: center;
 }
 
@@ -195,265 +203,587 @@
 }
 
 /* Housholds */
-
-.households-container p {
-  color: #1171df;
-  font-size: 24px;
-  font-weight: 560;
+/* Main Container Styles */
+.households-container {
+  padding: 20px;
+  background-color: #f5f8fb;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.households-container .handle-households {
+.households-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.households-header h1 {
+  color: #1171df;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Stats Cards */
+.household-stats {
+  display: flex;
+  gap: 15px;
+}
+
+.stat-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px 20px;
+  min-width: 120px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-left: 4px solid #1171df;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1171df;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
+
+/* Actions Bar */
+.handle-households {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.household-search-container .search {
-  width: 300px;
-  height: 35px;
-  border-radius: 6px;
-  outline: none;
-  border: none;
-  padding: 0 12px ;
-  background: #fff;
-  border: .5px solid #aaaaaa;
-}
-
-.search-icon svg {
-  fill: #1171df;
-}
-
-.handle-households .btn {
-  border: none;
-  padding: 5px 10px;
-  background: #1171df;
-  border-radius: 6px;
-  outline: none;
-  color: #fff;
-  cursor: pointer;
-  font-weight: 600;
-  margin-right: 5px;
-}
-
-
-.handle-households .hh-btn-del-all {
-  border: none;
-  background: #e82727;
-  padding: 5px 10px;
-  border-radius: 6px;
-  outline: none;
-  color: #fff;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.btn-del-all {
-  margin-left: 7px;
-  padding: 0 4px;
-  outline: none;
-  background: #e82727;
-  border-radius: 3px;
-  border: none;
+.action-buttons {
   display: flex;
-  justify-content: center;
+  gap: 10px;
+}
+
+.btn-add {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1171df;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-add:hover {
+  background: #0e5eb9;
+}
+
+.hh-btn-del-all {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ff4757;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.hh-btn-del-all:hover {
+  background: #e82727;
+}
+
+.hh-btn-del-all:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Search Box */
+.household-search-container {
+  position: relative;
+}
+
+.search-wrapper {
+  position: relative;
+  display: flex;
   align-items: center;
 }
 
-.btn-del-all svg {
-  font-size: 18.5px;
-  fill: #ffffff;
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+  font-size: 18px;
 }
 
+.search {
+  width: 300px;
+  height: 40px;
+  border-radius: 8px;
+  outline: none;
+  border: 1px solid #ddd;
+  padding: 0 12px 0 40px;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s;
+}
+
+.search:focus {
+  border-color: #1171df;
+  box-shadow: 0 0 0 2px rgba(17, 113, 223, 0.2);
+}
+
+/* Table Styles */
 .households-table-container {
   width: 100%;
   background: #fff;
-  margin-top: 30px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
-.households-table-container .households-table {
+.households-table {
   width: 100%;
   border-collapse: collapse;
-  text-align: center;
+  text-align: left;
   table-layout: fixed;
-}
-
-.households-table tr:nth-child(even) {
-  background-color: #ebf3fa;
 }
 
 .households-table th {
   background: #1171df;
   color: #fff;
-  padding: 3px;
-  width: 100%;
+  padding: 14px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.households-table tr {
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+}
+
+.households-table tr:hover {
+  background-color: #f2f7ff;
+}
+
+.households-table tr:nth-child(even) {
+  background-color: #f9fbfe;
+}
+
+.households-table tr:nth-child(even):hover {
+  background-color: #f2f7ff;
 }
 
 .households-table td {
-  padding: 3px;
+  padding: 12px 20px;
+  vertical-align: middle;
+  color: #333;
 }
 
-.households-table button{
+.household-name {
+  font-weight: 500;
+}
+
+/* Action Buttons */
+.btn-action {
+  width: 32px;
+  height: 32px;
   cursor: pointer;
   border: none;
-  padding: 2px;
-  border-radius: 2px;
-  margin-right: 7px;
+  border-radius: 4px;
+  margin-right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, opacity 0.2s;
 }
 
-.households-table button:last-child {
-  margin-right: 0;
+.btn-action:hover {
+  transform: translateY(-2px);
 }
 
-.households-table button svg {
+.btn-action svg {
   fill: #fff;
-  font-size: 17px;
+  font-size: 16px;
 }
 
-.households-table .eyes {
-  background: #61f368;
+.btn-action.eyes {
+  background: #27ae60;
 }
 
-.households-table .edit {
+.btn-action.eyes:hover {
+  background: #219653;
+}
+
+.btn-action.edit {
   background: #2e8af3;
 }
 
-.households-table .delete {
-  background: #ec2647;
+.btn-action.edit:hover {
+  background: #1a73e8;
 }
 
-/* household-info-modal */
+.btn-action.delete {
+  background: #ff4757;
+}
 
+.btn-action.delete:hover {
+  background: #e82647;
+}
+
+/* Residents Count */
+.residents-count {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.resident-icon {
+  color: #1171df;
+  font-size: 18px;
+}
+
+/* No Data Message */
+.no-data-row {
+  height: 200px;
+}
+
+.no-data-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  color: #888;
+}
+
+.no-data-icon {
+  font-size: 50px;
+  margin-bottom: 15px;
+  color: #ccc;
+}
+
+.no-data-message p {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Household Info Modal */
 .household-info-modal {
-  padding: 15px;
+  padding: 24px;
 }
 
 .household-info-modal h3 {
-  padding-bottom: 10px;
-  border-bottom: 1px solid #949494;
-}
-
-.household-info-modal p {
-  padding: 7px 0;
-}
-
-.household-info-modal .household-name-container {
-  width: 100%;
-  border: 1px solid #7c7c7c;
-  padding: 3px 6px;
-  background: #83b7f1;
+  margin: 0 0 20px 0;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  color: #1171df;
+  font-size: 20px;
   font-weight: 600;
-  margin-bottom: 15px;
 }
 
-.household-info-modal .household-info-table-container {
+.household-detail-section {
+  margin-bottom: 20px;
+}
+
+.section-label {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.household-name-container {
   width: 100%;
+  border-radius: 6px;
+  padding: 12px 16px;
+  background: #e6f0fd;
+  font-weight: 600;
+  color: #1171df;
+  border: 1px solid #d0e2fd;
 }
 
-.household-info-modal .households-info-table {
+.household-info-table-container {
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #eee;
+}
+
+.households-info-table {
   width: 100%;
   border-collapse: collapse;
-  text-align: center;
-  border: 1px solid #7c7c7c;
-  table-layout: fixed;
+  text-align: left;
 }
 
 .households-info-table th {
   background: #1171df;
   color: #fff;
-  padding: 3px;
+  padding: 12px 16px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.households-info-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.households-info-table tr:last-child td {
+  border-bottom: none;
 }
 
 .households-info-table tr:nth-child(even) {
-  background-color: #ebf3fa;
+  background-color: #f9fbfe;
 }
 
-/* Modal add household */
+/* Add Household Modal */
 .household-add-modal {
-  padding: 15px;
+  padding: 24px;
   width: 100%;
 }
 
-.household-add-modal input {
-  border-radius: 4px;
-}
-
-.household-add-modal input:focus {
-  border: 1.3px solid #1171df;
-}
-
-.household-add-modal input:hover {
-  border: 1.3px solid #1171df;
-}
-
-.household-add-modal .input-household-id {
-  outline: none;
-  height: 28px;
-  width: 125px;
-  padding-left: 1%;
-  margin-right: 7px;
-}
-
-.household-add-modal .input-household-name {
-  outline: none;
-  height: 28px;
-  width: 300px;
-  padding-left: 1%;
-  margin-right: 7px;
-}
-
-.household-add-modal .btn-add-resident {
-  background: #53f35b;
-  color: #ffffff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 600;
-  margin-right: 7px;
-}
-
-.household-add-modal .btn-sv-hsh {
-  background: #1171df;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
+.household-add-modal h3 {
+  margin: 0 0 20px 0;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  color: #1171df;
+  font-size: 20px;
   font-weight: 600;
 }
 
-.household-add-modal .attr-hsh-outer {
-  margin-top: 15px;
-  border-top: 2px solid #1171df;
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
-.household-add-modal input::placeholder {
-  color: #494949;
+.form-group {
+  flex: 1;
 }
 
-.household-add-modal .attr-hsh {
-  padding: 10px 0 0 0;
-  margin-top: 15px;
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #555;
+}
+
+.household-add-modal input,
+.household-add-modal select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.household-add-modal input:focus,
+.household-add-modal select:focus {
+  border-color: #1171df;
+  box-shadow: 0 0 0 2px rgba(17, 113, 223, 0.2);
+}
+
+/* Residents Section */
+.residents-section {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.residents-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-.input-field-hsh input {
-  outline: none;
-  height: 28px;
-  width: 200px;
-}
-
-.input-field-hsh .gender-hsh {
-  outline: none;
-  height: 28px;
-  width: 200px;
+.residents-header h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
   margin: 0;
 }
 
+.btn-add-resident {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.btn-add-resident:hover {
+  background: #219653;
+}
+
+.no-residents-message {
+  text-align: center;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.resident-card {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.resident-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f5f8fb;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.resident-header span {
+  font-weight: 500;
+  color: #555;
+}
+
+.btn-remove-resident {
+  background: none;
+  border: none;
+  color: #ff4757;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.attr-hsh {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  gap: 15px;
+}
+
+.input-field-hsh {
+  flex: 1;
+}
+
 .input-field-hsh label {
-  margin-right: 4px;
-  font-size: 13.2px;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #555;
+  font-weight: 500;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.btn-cancel {
+  padding: 10px 16px;
+  background: #f1f1f1;
+  border: none;
+  border-radius: 6px;
+  color: #555;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-cancel:hover {
+  background: #e5e5e5;
+}
+
+.btn-save {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #1171df;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-save:hover {
+  background: #0e5eb9;
+}
+
+/* Modal Overlay and Content */
+.modal-overlay-household-info {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content-household-info {
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #888;
+  transition: color 0.2s;
+}
+
+.close:hover {
+  color: #333;
 }
 
 /* length */

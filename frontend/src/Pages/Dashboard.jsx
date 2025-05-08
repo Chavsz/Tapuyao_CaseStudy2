@@ -291,11 +291,11 @@ const GrowthRateChart = () => {
       </div>
 
       <div className='new-chart'>
-        <div className='civil-status-chart'>
+        <div className='civil-status-chart'> {/* Civil Status Container*/}
           <p>Civil Status</p>
           {civilStatusChart()}
         </div>
-        <div className='recent-added-container'>
+        <div className='recent-added-container'>  {/* Recent Residents Added */}
           <p>Recent Residents Added</p>
           <table className='recent-table'>
             <thead>
@@ -342,8 +342,6 @@ const GrowthRateChart = () => {
         {AgeDistributionChart()}
       </div>
       
-
-
     </div>
   )
 }
