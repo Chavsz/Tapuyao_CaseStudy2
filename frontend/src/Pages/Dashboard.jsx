@@ -5,7 +5,7 @@ import * as goIcons from "react-icons/go";
 import * as ioIcons from "react-icons/io";
 import * as mdIcons from "react-icons/md";
 import * as faIcons from "react-icons/fa";
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Cell } from "recharts";
 
 const API_URL = {
   residents: 'http://localhost:5001/residents',
@@ -79,11 +79,11 @@ function Home() {
     }, {});
 
   const civilStatusData = [
-    { name: 'Single', count: civilStatusCounts['Single'] || 0 },
-    { name: 'Married', count: civilStatusCounts['Married'] || 0 },
-    { name: 'Separated', count: civilStatusCounts['Separated'] || 0 },
-    { name: 'Divorced', count: civilStatusCounts['Divorced'] || 0 },
-    { name: 'Widowed', count: civilStatusCounts['Widowed'] || 0 }
+    { name: 'Single', count: civilStatusCounts['Single'] || 0, color: '#FF6B6B' },
+    { name: 'Married', count: civilStatusCounts['Married'] || 0, color: '#34faf7' },
+    { name: 'Separated', count: civilStatusCounts['Separated'] || 0, color: '#fac934' },
+    { name: 'Divorced', count: civilStatusCounts['Divorced'] || 0, color: '#fa34ed' },
+    { name: 'Widowed', count: civilStatusCounts['Widowed'] || 0, color: '#84f54c' }
   ];
 
   const civilStatusChart = () => {
@@ -94,11 +94,14 @@ function Home() {
         <XAxis dataKey="name" label={{ value: "Civil Status", position: "bottom" }} />
         <YAxis label={{ value: "Count", angle: -90, position: "insideLeft" }} />
         <Tooltip />
-        <Bar dataKey="count" fill="#fcba03" radius={[5, 5, 0, 0]} />
+        <Bar dataKey="count" radius={[5, 5, 0, 0]}>
+          {civilStatusData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={entry.color} />
+          ))}
+        </Bar>
       </BarChart>
     </ResponsiveContainer>
     )
-
   }
   
   const getCountInRange = (start, end) => {

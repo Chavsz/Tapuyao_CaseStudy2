@@ -1007,3 +1007,200 @@ input, .select-severity{
 .delete-btn:hover {
   background-color: #cc0000;
 }
+
+/* Enhanced Affected Residents Styles */
+.affected-residents-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.stats-container {
+  display: flex;
+  gap: 16px;
+}
+
+.stat-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.stat-badge.households {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.stat-badge.residents {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.actions-container {
+  display: flex;
+  gap: 12px;
+}
+
+.affected-search-container {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.affected-search-container .search {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 16px 12px 40px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s;
+  background: #fff;
+}
+
+.affected-search-container .search:focus {
+  border-color: #1171df;
+  box-shadow: 0 0 0 3px rgba(17, 113, 223, 0.1);
+}
+
+.affected-search-container .search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #757575;
+  font-size: 18px;
+}
+
+.affected-table-container {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.affected-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.affected-table th {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 16px;
+  text-align: left;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.affected-table td {
+  padding: 16px;
+  color: #334155;
+  font-size: 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.affected-table tr:hover {
+  background: #f8fafc;
+}
+
+.affected-table .household-name {
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.affected-table .residents-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: #f1f5f9;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #475569;
+}
+
+.affected-table .disaster-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.disaster-tag.low { background: #e0f2fe; color: #0369a1; }
+.disaster-tag.moderate { background: #fef3c7; color: #92400e; }
+.disaster-tag.high { background: #fee2e2; color: #b91c1c; }
+.disaster-tag.severe { background: #fce7f3; color: #be185d; }
+.disaster-tag.extreme { background: #dcfce7; color: #166534; }
+
+.affected-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-action {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 16px;
+}
+
+.btn-action:hover {
+  transform: translateY(-2px);
+}
+
+.btn-action.view {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.btn-action.view:hover {
+  background: #bae6fd;
+}
+
+.btn-action.delete {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.btn-action.delete:hover {
+  background: #fecaca;
+}
+
+.no-data-container {
+  padding: 48px 24px;
+  text-align: center;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.no-data-icon {
+  font-size: 48px;
+  color: #cbd5e1;
+  margin-bottom: 16px;
+}
+
+.no-data-text {
+  color: #64748b;
+  font-size: 16px;
+  font-weight: 500;
+}

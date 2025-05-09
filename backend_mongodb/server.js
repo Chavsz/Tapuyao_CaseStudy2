@@ -80,12 +80,29 @@ const DisasterSchema = new mongoose.Schema({
   residents: { type: Number, required: true }
 });
 
+// Define AffectedHousehold Schema
+const AffectedHouseholdSchema = new mongoose.Schema({
+  id: { type: String, required: true, unique: true },
+  householdName: { type: String, required: true },
+  contacts: { type: String, required: true },
+  address: { type: String, required: true },
+  impact: { type: String, required: true },
+  disaster: { type: String, required: true },
+  residents: [
+    {
+      name: { type: String, required: true }
+    }
+  ],
+  timestamp: { type: Number, default: Date.now }
+});
+
 // Create models
 const Resident = mongoose.model('Resident', ResidentSchema);
 const Admin = mongoose.model('Admin', AdminSchema);
 const Household = mongoose.model('Household', HouseholdSchema);
 const Business = mongoose.model('Business', BusinessSchema);
 const Disaster = mongoose.model('Disaster', DisasterSchema);
+const AffectedHousehold = mongoose.model('AffectedHousehold', AffectedHouseholdSchema);
 
 // Default admin credentials
 const defaultAdmin = {
@@ -630,6 +647,89 @@ app.put('/disasters/:id', async (req, res) => {
     res.json({ message: 'Disaster updated successfully', disaster });
   } catch (error) {
     res.status(500).json({ message: 'Error updating disaster', error: error.message });
+  }
+});
+
+// CRUD for AffectedHousehold
+// Create
+app.post('/affected-households', async (req, res) => {
+  try {
+    const { id, householdName, contacts, address, impact, disaster, residents } = req.body;
+    if (!id || !householdName || !contacts || !address || !impact || !disaster || !residents || !Array.isArray(residents) || residents.length === 0) {
+      return res.status(400).json({ message: 'All fields are required and at least one resident.' });
+    }
+    const newAffected = new AffectedHousehold({
+      id,
+      householdName,
+      contacts,
+      address,
+      impact,
+      disaster,
+      residents
+    });
+    await newAffected.save();
+    res.status(201).json({ message: 'Affected household added successfully', affected: newAffected });
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating affected household', error: error.message });
+  }
+});
+
+// Read all
+app.get('/affected-households', async (req, res) => {
+  try {
+    const affected = await AffectedHousehold.find();
+    res.json(affected);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching affected households', error: error.message });
+  }
+});
+
+// Read one
+app.get('/affected-households/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const affected = await AffectedHousehold.findOne({ id });
+    if (!affected) return res.status(404).json({ message: 'Affected household not found' });
+    res.json(affected);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching affected household', error: error.message });
+  }
+});
+
+// Update
+app.put('/affected-households/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const update = req.body;
+    const affected = await AffectedHousehold.findOneAndUpdate({ id }, update, { new: true });
+    if (!affected) return res.status(404).json({ message: 'Affected household not found' });
+    res.json({ message: 'Affected household updated successfully', affected });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating affected household', error: error.message });
+  }
+});
+
+// Delete one
+app.delete('/affected-households/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await AffectedHousehold.findOneAndDelete({ id });
+    res.json({ message: 'Affected household deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting affected household', error: error.message });
+  }
+});
+
+// Delete all
+app.delete('/affected-households', async (req, res) => {
+  try {
+    const result = await AffectedHousehold.deleteMany({});
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'No affected households found to delete' });
+    }
+    res.status(200).json({ message: 'All affected households deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to delete all affected households', error: error.message });
   }
 });
 

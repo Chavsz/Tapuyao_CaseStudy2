@@ -1,3 +1,5 @@
+/* Records page */
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
 * {
@@ -56,21 +58,6 @@
 
 }
 
-/* dark mode */
-#light {
-  background-color: #fff;
-}
-
-#dark {
-  background-color: #393939;
-}
-
-.res-header {
-  color:#1171df;
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
 /* records */
 
 /* Improved base styles */
