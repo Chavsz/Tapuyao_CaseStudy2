@@ -28,7 +28,7 @@ function Home() {
     }
   };
 
-  // Fetch all residents
+  // Fetch all Households
   const fetchHouseholds = async () => {
     try {
       const response = await axios.get(API_URL.households);
