@@ -363,7 +363,7 @@ const Households = () => {
                   </button>
                   <button 
                     onClick={() => deleteHousehold(household.id)} 
-                    className='btn-action delete'
+                    className='btn-action hshdelete'
                     title="Delete"
                   >
                     <mdIcons.MdDeleteOutline />

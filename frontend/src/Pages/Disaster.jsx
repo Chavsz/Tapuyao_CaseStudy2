@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Pages.css';
 import Modal from '../Components/Modal_HouseholdInfo';
+import * as ioIcons from "react-icons/io5";
+import * as mdIcons from "react-icons/md";
 
 const DisasterManagement = () => {
   const [activeTab, setActiveTab] = useState('disasters');
@@ -15,6 +17,8 @@ const DisasterManagement = () => {
   });
   
   const [searchTerm, setSearchTerm] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingId, setEditingId] = useState(null);
 
   // 1. Add state for editing disaster
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -64,28 +68,63 @@ const DisasterManagement = () => {
     });
   };
 
-  // Update handleSubmit for disaster creation
+  // Update handleSubmit for disaster creation and editing
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5001/disasters', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...newDisaster,
-          households: 0,
-          residents: 0
-        }),
-      });
-      if (response.ok) {
-        fetchDisasters();
-        setNewDisaster({ type: '', date: '', location: '', severity: '' });
+      if (isEditing) {
+        const response = await fetch(`http://localhost:5001/disasters/${editingId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newDisaster),
+        });
+        if (response.ok) {
+          fetchDisasters();
+          setNewDisaster({ type: '', date: '', location: '', severity: '' });
+          setIsEditing(false);
+          setEditingId(null);
+        }
+      } else {
+        const response = await fetch('http://localhost:5001/disasters', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ...newDisaster,
+            households: 0,
+            residents: 0
+          }),
+        });
+        if (response.ok) {
+          fetchDisasters();
+          setNewDisaster({ type: '', date: '', location: '', severity: '' });
+        }
       }
     } catch (error) {
-      console.error('Error adding disaster:', error);
+      console.error('Error handling disaster:', error);
     }
+  };
+
+  // Handle edit button click
+  const handleEdit = (disaster) => {
+    setNewDisaster({
+      type: disaster.type,
+      date: disaster.date,
+      location: disaster.location,
+      severity: disaster.severity
+    });
+    setIsEditing(true);
+    setEditingId(disaster.id);
+  };
+
+  // Handle cancel edit
+  const handleCancelEdit = () => {
+    setNewDisaster({ type: '', date: '', location: '', severity: '' });
+    setIsEditing(false);
+    setEditingId(null);
   };
 
   // Handle disaster deletion with backend
@@ -247,7 +286,7 @@ const DisasterManagement = () => {
         <div className="tab-content">
           {/* New Disaster Form */}
           <div className="disaster-form">
-            <h2>Log New Disaster</h2>
+            <h2>{isEditing ? 'Edit Disaster' : 'Log New Disaster'}</h2>
             <form onSubmit={handleSubmit}>
               <div className="form-row">
                 <div className="form-group">
@@ -262,9 +301,8 @@ const DisasterManagement = () => {
                 </div>
                 <div className="form-group">
                   <input
-                    type="text"
+                    type="date"
                     name="date"
-                    placeholder="dd/mm/yy"
                     value={newDisaster.date}
                     onChange={handleInputChange}
                     required
@@ -299,7 +337,14 @@ const DisasterManagement = () => {
                   </select>
                 </div>
               </div>
-              <button type="submit" className="submit-btn">Add Disaster</button>
+              <div className="form-actions">
+                {isEditing && (
+                  <button type="button" className="cancel-btn" onClick={handleCancelEdit}>Cancel</button>
+                )}
+                <button type="submit" className="submit-btn">
+                  {isEditing ? 'Update Disaster' : 'Add Disaster'}
+                </button>
+              </div>
             </form>
           </div>
 
@@ -332,7 +377,7 @@ const DisasterManagement = () => {
                   {filteredDisasters.map((disaster) => (
                     <tr key={disaster.id}>
                       <td className="action-column">
-                        <button className="edit-btn" onClick={() => openEditModal(disaster)}>Edit</button>
+                        <button className="edit-btn" onClick={() => handleEdit(disaster)}>Edit</button>
                         <button 
                           className="delete-btn" 
                           onClick={() => handleDelete(disaster.id)}
@@ -375,7 +420,6 @@ const DisasterManagement = () => {
               <button 
                 className="hh-btn-del-all" 
                 onClick={handleDeleteAllAffected} 
-                disabled={affectedHouseholds.length === 0}
               >
                 Delete All
               </button>
@@ -414,22 +458,21 @@ const DisasterManagement = () => {
                             title="View Details" 
                             onClick={() => openViewModal(hh)}
                           >
-                            👁️
+                            <ioIcons.IoEyeSharp />
                           </button>
                           <button 
                             className="btn-action delete" 
                             title="Delete" 
                             onClick={() => handleDeleteAffected(hh.id)}
                           >
-                            🗑️
+                            <mdIcons.MdDeleteOutline />
                           </button>
                         </div>
                       </td>
                       <td className="household-name">{hh.householdName}</td>
                       <td>
                         <div className="residents-count">
-                          <span>👥</span>
-                          <span>{hh.residents?.length || 0} residents</span>
+                          <span>{hh.residents?.length || 0}</span>
                         </div>
                       </td>
                       <td>

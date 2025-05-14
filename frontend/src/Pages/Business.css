@@ -144,7 +144,7 @@
 }
 
 .bsns-btn-del-all {
-  background: #ff5252;
+  background: #ff4757;
   border: none;
   outline: none;
   cursor: pointer;
@@ -225,36 +225,46 @@
 
 .business-edit,
 .business-del {
+  width: 32px;
+  height: 32px;
   margin-right: 8px;
   border: none;
-  padding: 6px 10px;
   border-radius: 4px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
 }
 
 .business-edit {
-  background: rgba(17, 113, 223, 0.1);
+  color: #1171df;
+  background: #e1eeff;
 }
 
 .business-edit svg {
-  fill: #1171df;
+  font-size: 16px;
 }
 
 .business-edit:hover {
-  background: rgba(17, 113, 223, 0.2);
+  background: #1171df;
+  color: white;
+  transform: translateY(-2px);
 }
 
 .business-del {
-  background: rgba(236, 26, 26, 0.1);
+  color: #ff4757;
+  background: #fee2e2;
 }
 
 .business-del svg {
-  fill: #ec1a1a;
+  font-size: 16px;
 }
 
 .business-del:hover {
-  background: rgba(236, 26, 26, 0.2);
+  background: #ff4757;
+  color: white;
+  transform: translateY(-2px);
 }
 
 /* Status badges */

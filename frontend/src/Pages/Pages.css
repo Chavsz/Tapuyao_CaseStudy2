@@ -331,11 +331,6 @@
   background: #e82727;
 }
 
-.hh-btn-del-all:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-
 /* Search Box */
 .household-search-container {
   position: relative;
@@ -436,7 +431,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s, opacity 0.2s;
+  transition: all 0.2s;
 }
 
 .btn-action:hover {
@@ -444,32 +439,37 @@
 }
 
 .btn-action svg {
-  fill: #fff;
   font-size: 16px;
 }
 
 .btn-action.eyes {
-  background: #27ae60;
+  color: #22c55e;
+  background: #dcfce7;
 }
 
 .btn-action.eyes:hover {
-  background: #219653;
+  background: #22c55e;
+  color: white;
 }
 
 .btn-action.edit {
-  background: #2e8af3;
+  color: #1171df;
+  background: #e1eeff;
 }
 
 .btn-action.edit:hover {
-  background: #1a73e8;
+  background: #1171df;
+  color: white;
 }
 
-.btn-action.delete {
+.btn-action.hshdelete {
+  color: #ff4757;
+  background: #fee2e2;
+}
+
+.btn-action.hshdelete:hover {
   background: #ff4757;
-}
-
-.btn-action.delete:hover {
-  background: #e82647;
+  color: white;
 }
 
 /* Residents Count */
@@ -844,12 +844,13 @@
 
 h1 {
   margin-bottom: 20px;
-  color: #333;
+  color: #1171df;
 }
 
 h2 {
   margin-bottom: 15px;
   font-size: 1.2rem;
+  color: #1171df;
 }
 
 /* Tab Styles */
@@ -930,6 +931,20 @@ input, .select-severity{
   background-color: #1558b3;
 }
 
+.cancel-btn {
+  background-color: #ff4757;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-right: 10px;
+}
+
+.cancel-btn:hover {
+  background-color: #cf1212;
+}
+
 /* Search Styles */
 .search-container {
   margin-bottom: 20px;
@@ -984,7 +999,7 @@ input, .select-severity{
 }
 
 .delete-btn {
-  background-color: #ff4444;
+  background-color: #ff4757;
   color: white;
 }
 
@@ -993,7 +1008,7 @@ input, .select-severity{
 }
 
 .delete-btn:hover {
-  background-color: #cc0000;
+  background-color: #cf1212;
 }
 
 /* Enhanced Affected Residents Styles */
@@ -1081,8 +1096,8 @@ input, .select-severity{
 }
 
 .affected-table th {
-  background: #f8fafc;
-  color: #475569;
+  background: #1171df;
+  color: #ffffff;
   font-weight: 600;
   font-size: 13px;
   text-transform: uppercase;
@@ -1112,11 +1127,10 @@ input, .select-severity{
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 8px;
-  background: #f1f5f9;
   border-radius: 4px;
   font-size: 13px;
   color: #475569;
+  margin: 0;
 }
 
 .affected-table .disaster-tag {
@@ -1156,21 +1170,23 @@ input, .select-severity{
 }
 
 .btn-action.view {
-  background: #e0f2fe;
-  color: #0369a1;
+  background: #dcfce7;
+  color: #22c55e;
 }
 
 .btn-action.view:hover {
-  background: #bae6fd;
+  background: #22c55e;
+  color:#dcfce7 ;
 }
 
 .btn-action.delete {
   background: #fee2e2;
-  color: #b91c1c;
+  color: #ff4757;
 }
 
 .btn-action.delete:hover {
-  background: #fecaca;
+  background:#ff4757; 
+  color: #fee2e2;
 }
 
 .no-data-container {
