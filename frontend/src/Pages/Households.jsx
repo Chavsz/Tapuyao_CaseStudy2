@@ -126,7 +126,10 @@ const Households = () => {
     if (!selectedHousehold) return null;
 
     return (
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+      <Modal isOpen={isModalOpen} onClose={() => {
+        setIsModalOpen(false)
+        document.body.style.overflow = 'auto';
+      }}>
         <div className='household-info-modal'>
           <h3>Household Information</h3>
           <div className='household-detail-section'>
@@ -181,7 +184,10 @@ const Households = () => {
         </div>
       </div>
 
-      <Modal isOpen={isModalOpenAdd} onClose={() => setIsModalOpenAdd(false)}>
+      <Modal isOpen={isModalOpenAdd} onClose={() => {
+        setIsModalOpenAdd(false)
+        document.body.style.overflow = 'auto';
+      }}>
         <div className='household-add-modal'>
           <h3>Add New Household</h3>
           <form onSubmit={addHousehold}>

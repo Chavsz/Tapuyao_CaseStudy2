@@ -668,6 +668,15 @@ app.post('/affected-households', async (req, res) => {
       residents
     });
     await newAffected.save();
+
+    // Update disaster counts
+    const disasterDoc = await Disaster.findOne({ type: disaster });
+    if (disasterDoc) {
+      disasterDoc.households += 1;
+      disasterDoc.residents += residents.length;
+      await disasterDoc.save();
+    }
+
     res.status(201).json({ message: 'Affected household added successfully', affected: newAffected });
   } catch (error) {
     res.status(500).json({ message: 'Error creating affected household', error: error.message });
@@ -713,6 +722,19 @@ app.put('/affected-households/:id', async (req, res) => {
 app.delete('/affected-households/:id', async (req, res) => {
   try {
     const { id } = req.params;
+    const affected = await AffectedHousehold.findOne({ id });
+    if (!affected) {
+      return res.status(404).json({ message: 'Affected household not found' });
+    }
+
+    // Update disaster counts before deleting
+    const disasterDoc = await Disaster.findOne({ type: affected.disaster });
+    if (disasterDoc) {
+      disasterDoc.households -= 1;
+      disasterDoc.residents -= affected.residents.length;
+      await disasterDoc.save();
+    }
+
     await AffectedHousehold.findOneAndDelete({ id });
     res.json({ message: 'Affected household deleted successfully' });
   } catch (error) {
@@ -723,6 +745,9 @@ app.delete('/affected-households/:id', async (req, res) => {
 // Delete all
 app.delete('/affected-households', async (req, res) => {
   try {
+    // Reset all disaster counts to 0
+    await Disaster.updateMany({}, { households: 0, residents: 0 });
+    
     const result = await AffectedHousehold.deleteMany({});
     if (result.deletedCount === 0) {
       return res.status(404).json({ message: 'No affected households found to delete' });

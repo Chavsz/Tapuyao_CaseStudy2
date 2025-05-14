@@ -146,7 +146,7 @@ const DisasterManagement = () => {
     return (
       disaster.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
       disaster.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      disaster.id.includes(searchTerm)
+      disaster.severity.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
 
@@ -203,58 +203,71 @@ const DisasterManagement = () => {
         id: '', householdName: '', contacts: '', address: '', impact: '', disaster: '', residents: [{ name: '' }],
       });
       fetchAffectedHouseholds();
+      fetchDisasters(); // Refresh disaster list to update counts
     } catch (err) {
       alert('Error adding affected household');
     }
   };
+
   // Delete affected household
   const handleDeleteAffected = async (id) => {
     if (!window.confirm('Delete this affected household?')) return;
     try {
       await fetch(`http://localhost:5001/affected-households/${id}`, { method: 'DELETE' });
       fetchAffectedHouseholds();
+      fetchDisasters(); // Refresh disaster list to update counts
     } catch (err) {
       alert('Error deleting affected household');
     }
   };
+
   // Delete all
   const handleDeleteAllAffected = async () => {
     if (!window.confirm('Delete ALL affected households?')) return;
     try {
       await fetch('http://localhost:5001/affected-households', { method: 'DELETE' });
       fetchAffectedHouseholds();
+      fetchDisasters(); // Refresh disaster list to update counts
     } catch (err) {
       alert('Error deleting all affected households');
     }
   };
+
   // View details
   const openViewModal = (affected) => {
     setSelectedAffected(affected);
     setViewModalOpen(true);
   };
+
   const closeViewModal = () => {
     setViewModalOpen(false);
     setSelectedAffected(null);
+    document.body.style.overflow = 'auto';
   };
+
   // Modal resident handlers
   const handleAddResidentField = () => {
     setNewAffected({ ...newAffected, residents: [...newAffected.residents, { name: '' }] });
   };
+
   const handleRemoveResidentField = (idx) => {
     const updated = [...newAffected.residents];
     updated.splice(idx, 1);
     setNewAffected({ ...newAffected, residents: updated });
   };
+
   const handleResidentNameChange = (idx, value) => {
     const updated = [...newAffected.residents];
     updated[idx].name = value;
     setNewAffected({ ...newAffected, residents: updated });
   };
+
   // Modal input handler
   const handleAffectedInput = (e) => {
     const { name, value } = e.target;
     setNewAffected({ ...newAffected, [name]: value });
   };
+
   // Filtered affected households
   const filteredAffected = affectedHouseholds.filter(hh =>
     hh.householdName.toLowerCase().includes(affectedSearch.toLowerCase()) ||
@@ -414,7 +427,7 @@ const DisasterManagement = () => {
               </div>
             </div>
             <div className="actions-container">
-              <button className="btn-add" onClick={() => setAffectedModalOpen(true)}>
+              <button className="btn-add" onClick={() =>  setAffectedModalOpen(true)}>
                 <span>+</span> Add Household
               </button>
               <button 
@@ -493,7 +506,10 @@ const DisasterManagement = () => {
           </div>
 
           {/* Add Household Modal */}
-          <Modal isOpen={affectedModalOpen} onClose={() => setAffectedModalOpen(false)}>
+          <Modal isOpen={affectedModalOpen} onClose={() => {
+            setAffectedModalOpen(false)
+            document.body.style.overflow = 'auto';
+          }}>
             <div className="household-add-modal" style={{ maxHeight: '80vh', overflowY: 'auto' }}>
               <h3>Add Affected Residents</h3>
               <form onSubmit={handleAddAffected}>
