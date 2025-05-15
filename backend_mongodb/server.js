@@ -27,6 +27,8 @@ mongoose.connect(MONGODB_URI)
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Define Schemas
+
+// Resident Schema
 const ResidentSchema = new mongoose.Schema({
   id: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
@@ -48,17 +50,20 @@ const ResidentSchema = new mongoose.Schema({
   timestamp: { type: Number, default: Date.now }
 });
 
+// Admin Schema
 const AdminSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true }
 });
 
+// Household Schema
 const HouseholdSchema = new mongoose.Schema({
   id: { type: String, required: true, unique: true },
   houseName: String,
   residents: Array
 });
 
+// Business Schema
 const BusinessSchema = new mongoose.Schema({
   id: { type: String, required: true, unique: true },
   businessName: { type: String, required: true },
@@ -70,6 +75,7 @@ const BusinessSchema = new mongoose.Schema({
   contactNumber: { type: String, required: true }
 });
 
+// Disaster Schema
 const DisasterSchema = new mongoose.Schema({
   id: { type: String, required: true, unique: true },
   type: { type: String, required: true },
@@ -104,6 +110,8 @@ const Business = mongoose.model('Business', BusinessSchema);
 const Disaster = mongoose.model('Disaster', DisasterSchema);
 const AffectedHousehold = mongoose.model('AffectedHousehold', AffectedHouseholdSchema);
 
+//Admin 
+
 // Default admin credentials
 const defaultAdmin = {
   username: 'admin',
@@ -130,6 +138,8 @@ async function createDefaultAdmin() {
 createDefaultAdmin();
 
 // CRUD Operations
+
+// Resident CRUD Operations
 
 // Route to save resident data
 app.post('/residents', async (req, res) => {
@@ -174,6 +184,7 @@ app.post('/residents', async (req, res) => {
   }
 });
 
+// get recent residents
 app.get('/recent-residents', async (req, res) => {
   try {
     const residents = await Resident.find()
@@ -187,7 +198,7 @@ app.get('/recent-residents', async (req, res) => {
   }
 });
 
-// Read (R)
+// Read resident by id
 app.get('/residents/:id', async (req, res) => {
   const id = req.params.id;
   try {
@@ -324,6 +335,8 @@ app.get('/admin/protected', authenticateAdmin, (req, res) => {
   res.json({ message: 'This is a protected route', admin: req.admin });
 });
 
+// Household CRUD Operations
+
 // Store household data
 app.post('/households', async (req, res) => {
   try {
@@ -396,6 +409,8 @@ app.delete('/households', async (req, res) => {
   }
 });
 
+// Read CSV file
+
 app.post('/upload-csv', upload.single('file'), async (req, res) => {
   const filePath = req.file.path;
   const residents = [];
@@ -464,7 +479,7 @@ app.post('/businesses', async (req, res) => {
   }
 });
 
-// Read (R)
+// Read business data by id
 app.get('/businesses/:id', async (req, res) => {
   const id = req.params.id;
   try {
@@ -591,6 +606,7 @@ app.get('/export-residents', async (req, res) => {
 });
 
 //Disaster
+
 // Create new disaster
 app.post('/disasters', async (req, res) => {
   try {
@@ -651,6 +667,7 @@ app.put('/disasters/:id', async (req, res) => {
 });
 
 // CRUD for AffectedHousehold
+
 // Create
 app.post('/affected-households', async (req, res) => {
   try {
@@ -683,7 +700,7 @@ app.post('/affected-households', async (req, res) => {
   }
 });
 
-// Read all
+// Read all 
 app.get('/affected-households', async (req, res) => {
   try {
     const affected = await AffectedHousehold.find();

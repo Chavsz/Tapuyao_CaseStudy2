@@ -44,7 +44,7 @@ function Records() {
   const [currentPage, setCurrentPage] = useState(1);
   const [showQR, setShowQR] = useState(false);
   const rowsPerPage = 10;
-  
+
   // Fetch all residents
   const fetchResidents = async () => {
     try {
@@ -97,9 +97,11 @@ function Records() {
       });
       setIsModalOpen(false);
       setIsEditing(false);
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     } catch (error) {
-      toast.error(isEditing ? "Error updating resident!" : "Error adding resident!");
+      toast.error(
+        isEditing ? "Error updating resident!" : "Error adding resident!"
+      );
     }
   };
 
@@ -131,7 +133,7 @@ function Records() {
       });
       setIsEditing(false);
       setIsModalOpen(false);
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     } catch (error) {
       toast.error("Error updating resident!");
     }
@@ -139,24 +141,28 @@ function Records() {
 
   // Delete resident
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(`${API_URL}/${id}`);
-      toast.success("resident deleted!");
-      fetchResidents();
-    } catch (error) {
-      toast.error("Error deleting resident!");
+    if (window.confirm("Are you sure you want to delete this resident?")) {
+      try {
+        await axios.delete(`${API_URL}/${id}`);
+        toast.success("resident deleted!");
+        fetchResidents();
+      } catch (error) {
+        toast.error("Error deleting resident!");
+      }
     }
   };
 
   // Delete all residents
   const handleDeleteAll = async () => {
-    try {
-      await axios.delete(API_URL);
-      toast.success("All residents deleted successfully!");
-      fetchResidents();
-    } catch (error) {
-      toast.error("Error deleting all residents!");
-      console.error("Error deleting all residents:", error);
+    if (window.confirm("Are you sure you want to delete ALL residents? This action cannot be undone.")) {
+      try {
+        await axios.delete(API_URL);
+        toast.success("All residents deleted successfully!");
+        fetchResidents();
+      } catch (error) {
+        toast.error("Error deleting all residents!");
+        console.error("Error deleting all residents:", error);
+      }
     }
   };
 
@@ -273,10 +279,13 @@ function Records() {
 
   return (
     <div className="records">
-      <Modal isOpen={isModalOpen} onClose={() => {
-        setIsModalOpen(false);
-        document.body.style.overflow = 'auto';
-      }}>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          document.body.style.overflow = "auto";
+        }}
+      >
         <div className="form">
           <form onSubmit={handleAddSubmit}>
             <div className="id-form">

@@ -40,6 +40,10 @@ const DisasterManagement = () => {
   });
   const [affectedSearch, setAffectedSearch] = useState('');
 
+  // Add this after the other handlers
+  const [editAffectedModalOpen, setEditAffectedModalOpen] = useState(false);
+  const [editingAffected, setEditingAffected] = useState(null);
+
   // Fetch disasters on component mount
   useEffect(() => {
     fetchDisasters();
@@ -129,6 +133,7 @@ const DisasterManagement = () => {
 
   // Handle disaster deletion with backend
   const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this disaster?")) return;
     try {
       const response = await fetch(`http://localhost:5001/disasters/${id}`, {
         method: 'DELETE'
@@ -204,6 +209,7 @@ const DisasterManagement = () => {
       });
       fetchAffectedHouseholds();
       fetchDisasters(); // Refresh disaster list to update counts
+      document.body.style.overflow = 'auto';
     } catch (err) {
       alert('Error adding affected household');
     }
@@ -273,6 +279,51 @@ const DisasterManagement = () => {
     hh.householdName.toLowerCase().includes(affectedSearch.toLowerCase()) ||
     hh.disaster.toLowerCase().includes(affectedSearch.toLowerCase())
   );
+
+  // Add this after the other handlers
+  const handleEditAffected = (affected) => {
+    setEditingAffected(affected);
+    setEditAffectedModalOpen(true);
+  };
+
+  const handleUpdateAffected = async (e) => {
+    e.preventDefault();
+    try {
+      await fetch(`http://localhost:5001/affected-households/${editingAffected.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editingAffected),
+      });
+      setEditAffectedModalOpen(false);
+      setEditingAffected(null);
+      fetchAffectedHouseholds();
+      fetchDisasters(); // Refresh disaster list to update counts
+      document.body.style.overflow = 'auto';
+    } catch (err) {
+      alert('Error updating affected household');
+    }
+  };
+
+  const handleEditAffectedInput = (e) => {
+    const { name, value } = e.target;
+    setEditingAffected({ ...editingAffected, [name]: value });
+  };
+
+  const handleEditResidentNameChange = (idx, value) => {
+    const updated = [...editingAffected.residents];
+    updated[idx].name = value;
+    setEditingAffected({ ...editingAffected, residents: updated });
+  };
+
+  const handleAddEditResidentField = () => {
+    setEditingAffected({ ...editingAffected, residents: [...editingAffected.residents, { name: '' }] });
+  };
+
+  const handleRemoveEditResidentField = (idx) => {
+    const updated = [...editingAffected.residents];
+    updated.splice(idx, 1);
+    setEditingAffected({ ...editingAffected, residents: updated });
+  };
 
   return (
     <div className="disaster-management">
@@ -474,6 +525,13 @@ const DisasterManagement = () => {
                             <ioIcons.IoEyeSharp />
                           </button>
                           <button 
+                            className="btn-action edit" 
+                            title="Edit" 
+                            onClick={() => handleEditAffected(hh)}
+                          >
+                            <mdIcons.MdEdit />
+                          </button>
+                          <button 
                             className="btn-action delete" 
                             title="Delete" 
                             onClick={() => handleDeleteAffected(hh.id)}
@@ -622,6 +680,86 @@ const DisasterManagement = () => {
                     </table>
                   </div>
                 </div>
+              </div>
+            )}
+          </Modal>
+          {/* Edit Affected Household Modal */}
+          <Modal isOpen={editAffectedModalOpen} onClose={() => {
+            setEditAffectedModalOpen(false);
+            setEditingAffected(null);
+            document.body.style.overflow = 'auto';
+          }}>
+            {editingAffected && (
+              <div className="household-add-modal" style={{ maxHeight: '80vh', overflowY: 'auto' }}>
+                <h3>Edit Affected Household</h3>
+                <form onSubmit={handleUpdateAffected}>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label>Household ID</label>
+                      <input type="text" name="id" value={editingAffected.id} onChange={handleEditAffectedInput} required />
+                    </div>
+                    <div className="form-group">
+                      <label>Household Name</label>
+                      <input type="text" name="householdName" value={editingAffected.householdName} onChange={handleEditAffectedInput} required />
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label>Contacts</label>
+                      <input type="text" name="contacts" value={editingAffected.contacts} onChange={handleEditAffectedInput} required />
+                    </div>
+                    <div className="form-group">
+                      <label>Address</label>
+                      <input type="text" name="address" value={editingAffected.address} onChange={handleEditAffectedInput} required />
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label>Impact</label>
+                      <select name="impact" value={editingAffected.impact} onChange={handleEditAffectedInput} required>
+                        <option value="">Select Impact</option>
+                        <option value="Injured">Injured</option>
+                        <option value="House Damaged">House Damaged</option>
+                        <option value="Lost Livelihood">Lost Livelihood</option>
+                        <option value="Missing">Missing</option>
+                        <option value="Deceased">Deceased</option>
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <label>Disaster</label>
+                      <select name="disaster" value={editingAffected.disaster} onChange={handleEditAffectedInput} required>
+                        <option value="">Select Disaster</option>
+                        {disasters.map(d => <option key={d.id} value={d.type}>{d.type}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="residents-section">
+                    <div className="residents-header">
+                      <h4>Residents</h4>
+                      <button type="button" className="btn-add-resident" onClick={handleAddEditResidentField}>+ Add Resident</button>
+                    </div>
+                    <div className="attr-hsh-outer">
+                      {editingAffected.residents.map((resident, idx) => (
+                        <div key={idx} className="resident-card">
+                          <div className="resident-header">
+                            <span>Resident #{idx + 1}</span>
+                            <button type="button" className="btn-remove-resident" onClick={() => handleRemoveEditResidentField(idx)}>&times;</button>
+                          </div>
+                          <div className="attr-hsh">
+                            <div className="input-field-hsh">
+                              <label>Name</label>
+                              <input type="text" value={resident.name} onChange={e => handleEditResidentNameChange(idx, e.target.value)} required />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn-cancel" onClick={() => setEditAffectedModalOpen(false)}>Cancel</button>
+                    <button type="submit" className="btn-save">Update</button>
+                  </div>
+                </form>
               </div>
             )}
           </Modal>

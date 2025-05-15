@@ -68,23 +68,27 @@ function Business() {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5001/businesses/${id}`);
-      fetchBusinesses();
-    } catch (error) {
-      console.error("Error deleting business:", error);
+    if (window.confirm("Are you sure you want to delete this business?")) { 
+      try {
+        await axios.delete(`http://localhost:5001/businesses/${id}`);
+        fetchBusinesses();
+      } catch (error) {
+        console.error("Error deleting business:", error);
+      }
     }
   };
 
   // Delete all businesses
   const handleDeleteAll = async () => {
-    try {
-      await axios.delete("http://localhost:5001/businesses");
-      toast.success("All businesses deleted successfully!");
-      fetchBusinesses();
-    } catch (error) {
-      toast.error("Error deleting all businesses!");
-      console.error("Error deleting all businesses", error);
+    if (window.confirm("Are you sure you want to delete ALL businesses? This action cannot be undone.")) {
+      try {
+        await axios.delete("http://localhost:5001/businesses");
+        toast.success("All businesses deleted successfully!");
+        fetchBusinesses();
+      } catch (error) {
+        toast.error("Error deleting all businesses!");
+        console.error("Error deleting all businesses", error);
+      }
     }
   };
 

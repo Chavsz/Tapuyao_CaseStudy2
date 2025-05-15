@@ -72,6 +72,7 @@ const Households = () => {
       setHouseName('');
       setResidents([]);
       setIsModalOpenAdd(false);
+      document.body.style.overflow = 'auto';
     } catch (error) {
       toast.error('Error adding household!');
     }

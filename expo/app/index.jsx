@@ -17,9 +17,9 @@ import { BarChart, PieChart } from "react-native-chart-kit";
 import "../global.css";
 
 const API_URL = {
-  residents: "http://192.168.100.65:5001/residents",
-  households: "http://192.168.100.65:5001/households",
-  businesses: "http://192.168.100.65:5001/businesses",
+  residents: "http://192.168.155.85:5001/residents",
+  households: "http://192.168.155.85:5001/households",
+  businesses: "http://192.168.155.85:5001/businesses",
 };
 
 const StatCard = ({ icon, title, value, color }) => {
